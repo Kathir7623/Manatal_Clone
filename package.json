@@ -1,0 +1,21 @@
+{
+  "name": "vivantify-ats",
+  "version": "2.0.0",
+  "description": "Vivantify Technology Solutions - Applicant Tracking System (Next.js 16 + Supabase)",
+  "scripts": {
+    "dev": "npm --prefix client run dev",
+    "build": "npm --prefix client run build",
+    "start": "npm --prefix client run start",
+    "install:all": "npm install --prefix client"
+  },
+  "keywords": [
+    "nextjs",
+    "supabase",
+    "postgresql",
+    "ats",
+    "applicant-tracking-system",
+    "vivantify"
+  ],
+  "author": "Vivantify Technology Solutions",
+  "license": "ISC"
+}
