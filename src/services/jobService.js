@@ -497,13 +497,18 @@ export const jobService = {
         supabase.from('applications').select('*, candidates(name), jobs(title)').order('created_at', { ascending: false }).limit(5)
       ]);
 
-      return {
+      const statsObj = {
         totalJobs: totalJobs || 0,
         openJobs: openJobs || 0,
         closedJobs: closedJobs || 0,
         totalApplications: totalApplications || 0,
         newApplications: newApplications || 0,
-        shortlistedCandidates: shortlistedCandidates || 0,
+        shortlistedCandidates: shortlistedCandidates || 0
+      };
+
+      return {
+        ...statsObj,
+        stats: statsObj,
         recentJobs: (recentJobs || []).map((j) => ({
           ...normalizeJob(j),
           applicationCount: j.applications?.[0]?.count || 0
@@ -523,13 +528,18 @@ export const jobService = {
     const jobs = getLocalJobs().filter((j) => !j.is_deleted);
     const apps = (typeof window !== 'undefined' && JSON.parse(localStorage.getItem('vivantify_applications') || '[]')) || [];
 
-    return {
+    const statsObj = {
       totalJobs: jobs.length,
       openJobs: jobs.filter((j) => j.status === 'OPEN').length,
       closedJobs: jobs.filter((j) => j.status === 'CLOSED').length,
       totalApplications: apps.length,
       newApplications: apps.filter((a) => a.status === 'NEW').length,
-      shortlistedCandidates: apps.filter((a) => a.status === 'SHORTLISTED').length,
+      shortlistedCandidates: apps.filter((a) => a.status === 'SHORTLISTED').length
+    };
+
+    return {
+      ...statsObj,
+      stats: statsObj,
       recentJobs: jobs.slice(0, 5).map(normalizeJob),
       recentApplications: apps.slice(0, 5)
     };

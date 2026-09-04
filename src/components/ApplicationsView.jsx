@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useParams } from 'next/navigation';
+import React, { useState, useEffect } from 'react';
+import { useParams, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { applicationService } from '../services/applicationService';
@@ -36,12 +36,25 @@ const STATUS_OPTIONS = [
 
 export default function ApplicationsView() {
   const params = useParams();
+  const searchParams = useSearchParams();
   const jobId = params?.jobId;
   const queryClient = useQueryClient();
 
+  const initialStatus = searchParams?.get('status') || 'ALL';
   const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('ALL');
+  const [statusFilter, setStatusFilter] = useState(initialStatus);
   const [page, setPage] = useState(1);
+
+  // Sync with searchParams if changed externally (e.g. clicking dashboard cards)
+  useEffect(() => {
+    const s = searchParams?.get('status');
+    if (s && s !== statusFilter) {
+      setStatusFilter(s);
+      setPage(1);
+    } else if (!s && statusFilter !== 'ALL' && !jobId) {
+      setStatusFilter('ALL');
+    }
+  }, [searchParams]);
 
   // Selected application for detail modal
   const [selectedApp, setSelectedApp] = useState(null);

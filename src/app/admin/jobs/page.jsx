@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { jobService } from '../../../services/jobService';
 import StatusBadge from '../../../components/StatusBadge';
@@ -21,11 +22,25 @@ import {
   AlertTriangle
 } from 'lucide-react';
 
-export default function AdminJobsPage() {
+function AdminJobsContent() {
+  const searchParams = useSearchParams();
   const queryClient = useQueryClient();
+  const initialStatus = searchParams?.get('status') || 'ALL';
+
   const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('ALL');
+  const [statusFilter, setStatusFilter] = useState(initialStatus);
   const [page, setPage] = useState(1);
+
+  // Sync state if query param changes
+  useEffect(() => {
+    const s = searchParams?.get('status');
+    if (s && s !== statusFilter) {
+      setStatusFilter(s);
+      setPage(1);
+    } else if (!s && statusFilter !== 'ALL') {
+      setStatusFilter('ALL');
+    }
+  }, [searchParams]);
 
   // Delete modal state
   const [deleteModalJob, setDeleteModalJob] = useState(null);
@@ -292,5 +307,13 @@ export default function AdminJobsPage() {
         </div>
       </Modal>
     </div>
+  );
+}
+
+export default function AdminJobsPage() {
+  return (
+    <Suspense fallback={<Loader message="Loading job listings..." />}>
+      <AdminJobsContent />
+    </Suspense>
   );
 }

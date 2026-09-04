@@ -40,7 +40,8 @@ export default function DashboardPage() {
     );
   }
 
-  const { stats, recentJobs = [], recentApplications = [] } = data || {};
+  const { recentJobs = [], recentApplications = [] } = data || {};
+  const stats = data?.stats || data || {};
 
   const statCards = [
     {
@@ -48,42 +49,48 @@ export default function DashboardPage() {
       value: stats?.totalJobs ?? 0,
       icon: Briefcase,
       color: 'text-[#ed7a1c]',
-      bg: 'bg-orange-50'
+      bg: 'bg-orange-50',
+      href: '/admin/jobs'
     },
     {
       title: 'Open Jobs',
       value: stats?.openJobs ?? 0,
       icon: CheckCircle,
       color: 'text-emerald-600',
-      bg: 'bg-emerald-50'
+      bg: 'bg-emerald-50',
+      href: '/admin/jobs?status=OPEN'
     },
     {
       title: 'Closed Jobs',
       value: stats?.closedJobs ?? 0,
       icon: Clock,
       color: 'text-slate-600',
-      bg: 'bg-slate-100'
+      bg: 'bg-slate-100',
+      href: '/admin/jobs?status=CLOSED'
     },
     {
       title: 'Total Applications',
       value: stats?.totalApplications ?? 0,
       icon: Users,
       color: 'text-[#ed7a1c]',
-      bg: 'bg-orange-50'
+      bg: 'bg-orange-50',
+      href: '/admin/applications'
     },
     {
       title: 'New Applications',
       value: stats?.newApplications ?? 0,
       icon: FileCheck2,
       color: 'text-amber-600',
-      bg: 'bg-amber-50'
+      bg: 'bg-amber-50',
+      href: '/admin/applications?status=NEW'
     },
     {
       title: 'Shortlisted Candidates',
       value: stats?.shortlistedCandidates ?? 0,
       icon: CheckCircle,
       color: 'text-purple-600',
-      bg: 'bg-purple-50'
+      bg: 'bg-purple-50',
+      href: '/admin/applications?status=SHORTLISTED'
     }
   ];
 
@@ -124,22 +131,28 @@ export default function DashboardPage() {
         {statCards.map((card, idx) => {
           const Icon = card.icon;
           return (
-            <div
+            <Link
               key={idx}
-              className="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs flex flex-col justify-between"
+              href={card.href}
+              className="group bg-white rounded-2xl border border-slate-200 hover:border-[#ed7a1c]/60 p-4 shadow-xs hover:shadow-md transition-all flex flex-col justify-between cursor-pointer"
             >
               <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-semibold text-slate-500 truncate">
+                <span className="text-xs font-semibold text-slate-500 group-hover:text-slate-800 truncate transition">
                   {card.title}
                 </span>
-                <div className={`p-1.5 rounded-lg ${card.bg} ${card.color}`}>
+                <div className={`p-1.5 rounded-lg ${card.bg} ${card.color} group-hover:scale-110 transition-transform`}>
                   <Icon className="w-4 h-4" />
                 </div>
               </div>
-              <div className="text-2xl font-extrabold text-slate-900 tracking-tight">
-                {card.value}
+              <div className="flex items-baseline justify-between mt-auto">
+                <div className="text-2xl font-extrabold text-slate-900 tracking-tight group-hover:text-[#ed7a1c] transition-colors">
+                  {card.value}
+                </div>
+                <span className="text-[11px] font-semibold text-slate-400 group-hover:text-[#ed7a1c] flex items-center gap-0.5 transition-colors">
+                  View <ChevronRight className="w-3 h-3" />
+                </span>
               </div>
-            </div>
+            </Link>
           );
         })}
       </div>
