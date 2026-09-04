@@ -34,7 +34,7 @@ function ApplicationSuccessContent() {
           <div>
             <span className="text-xs text-slate-400 block font-medium">Applied Position</span>
             <span className="text-base font-bold text-slate-800 flex items-center gap-1.5 mt-0.5">
-              <Briefcase className="w-4 h-4 text-blue-600 shrink-0" />
+              <Briefcase className="w-4 h-4 text-[#ed7a1c] shrink-0" />
               {jobTitle}
             </span>
           </div>
@@ -62,7 +62,7 @@ function ApplicationSuccessContent() {
 
         <Link
           href="/jobs"
-          className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-sm transition"
+          className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-3 rounded-xl bg-[#ed7a1c] hover:bg-[#d96a12] active:bg-[#b8540b] text-white font-bold text-sm shadow-sm transition hover:shadow-orange-500/25"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to Jobs

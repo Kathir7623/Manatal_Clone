@@ -6,7 +6,7 @@ const StatusBadge = ({ status, type = 'application', className = '' }) => {
   const normalized = status.toUpperCase();
 
   const appStyles = {
-    NEW: 'bg-blue-100 text-blue-800 border-blue-200',
+    NEW: 'bg-orange-100 text-orange-900 border-orange-200',
     REVIEWING: 'bg-amber-100 text-amber-800 border-amber-200',
     SHORTLISTED: 'bg-purple-100 text-purple-800 border-purple-200',
     INTERVIEW: 'bg-teal-100 text-teal-800 border-teal-200',

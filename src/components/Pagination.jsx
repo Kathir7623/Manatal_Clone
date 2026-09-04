@@ -46,8 +46,8 @@ const Pagination = ({
               onClick={() => onPageChange(p)}
               className={`w-7 h-7 rounded-md text-xs font-semibold flex items-center justify-center transition ${
                 currentPage === p
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-slate-700 hover:bg-slate-100'
+                  ? 'bg-[#ed7a1c] text-white shadow-sm'
+                  : 'text-slate-700 hover:bg-orange-50 hover:text-[#ed7a1c]'
               }`}
             >
               {p}

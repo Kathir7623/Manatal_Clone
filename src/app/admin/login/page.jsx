@@ -62,7 +62,7 @@ function AdminLoginContent() {
           Back to Public Job Board
         </Link>
 
-        <div className="w-12 h-12 bg-slate-900 text-blue-400 rounded-xl flex items-center justify-center mx-auto shadow-md">
+        <div className="w-12 h-12 bg-[#ed7a1c] text-white rounded-xl flex items-center justify-center mx-auto shadow-md shadow-orange-500/25">
           <ShieldCheck className="w-7 h-7" />
         </div>
         <h2 className="mt-4 text-2xl font-extrabold text-slate-900 tracking-tight">

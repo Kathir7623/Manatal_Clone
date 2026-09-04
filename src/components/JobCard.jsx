@@ -4,14 +4,14 @@ import { MapPin, Briefcase, Clock, DollarSign, ArrowRight } from 'lucide-react';
 
 const JobCard = ({ job }) => {
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-xs hover:shadow-md transition-all hover:border-blue-200 flex flex-col justify-between group">
+    <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-xs hover:shadow-md transition-all hover:border-[#ed7a1c]/40 flex flex-col justify-between group">
       <div>
         <div className="flex items-start justify-between gap-3 mb-2">
           <div>
             <span className="inline-block text-xs font-mono font-medium px-2 py-0.5 bg-slate-100 text-slate-600 rounded">
               {job.jobId}
             </span>
-            <h3 className="text-xl font-bold text-slate-900 mt-1.5 group-hover:text-blue-600 transition">
+            <h3 className="text-xl font-bold text-slate-900 mt-1.5 group-hover:text-[#ed7a1c] transition">
               {job.title}
             </h3>
           </div>
@@ -54,7 +54,7 @@ const JobCard = ({ job }) => {
             {job.skills.slice(0, 5).map((skill, index) => (
               <span
                 key={index}
-                className="text-xs px-2 py-1 bg-blue-50 text-blue-700 font-medium rounded-md"
+                className="text-xs px-2 py-1 bg-orange-50 text-[#ed7a1c] font-medium rounded-md border border-orange-200/50"
               >
                 {skill}
               </span>
@@ -74,7 +74,7 @@ const JobCard = ({ job }) => {
         </span>
         <Link
           href={`/jobs/${job.jobId}`}
-          className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 shadow-md hover:shadow-indigo-500/30 transition-all duration-200 hover:-translate-y-0.5"
+          className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white bg-[#ed7a1c] hover:bg-[#d96a12] active:bg-[#b8540b] shadow-md hover:shadow-orange-500/25 transition-all duration-200 hover:-translate-y-0.5"
         >
           <span>View Job</span>
           <ArrowRight className="w-4 h-4" />

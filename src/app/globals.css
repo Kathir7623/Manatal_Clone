@@ -1,5 +1,19 @@
 @import "tailwindcss";
 
+@theme {
+  --color-primary: #ed7a1c;
+  --color-primary-hover: #d96a12;
+  --color-primary-dark: #b8540b;
+  --color-primary-light: #fff7ed;
+}
+
+:root {
+  --primary: #ed7a1c;
+  --primary-hover: #d96a12;
+  --primary-light: #fff7ed;
+  --primary-dark: #b8540b;
+}
+
 @layer base {
   body {
     @apply bg-slate-50 text-slate-900 antialiased min-h-screen font-sans;

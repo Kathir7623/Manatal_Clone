@@ -35,7 +35,7 @@ export default function JobDetailsPage() {
         </p>
         <Link
           href="/jobs"
-          className="mt-6 inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition"
+          className="mt-6 inline-flex items-center gap-1.5 px-4 py-2 bg-[#ed7a1c] text-white text-sm font-semibold rounded-lg hover:bg-[#d96a12] active:bg-[#b8540b] transition"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to Open Jobs
@@ -219,7 +219,7 @@ export default function JobDetailsPage() {
           ) : (
             <Link
               href={`/jobs/${job.jobId}/apply`}
-              className="inline-flex items-center justify-center px-10 py-3 bg-[#0d6efd] hover:bg-blue-700 text-white font-semibold text-sm rounded-lg shadow-sm transition hover:shadow-md"
+              className="inline-flex items-center justify-center px-10 py-3 bg-[#ed7a1c] hover:bg-[#d96a12] active:bg-[#b8540b] text-white font-semibold text-sm rounded-lg shadow-sm transition hover:shadow-orange-500/25"
             >
               Apply for Position
             </Link>

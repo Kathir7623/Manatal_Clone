@@ -32,7 +32,7 @@ export default function DashboardPage() {
         <p className="text-xs text-slate-500 mt-1">{error?.message}</p>
         <button
           onClick={() => refetch()}
-          className="mt-4 px-4 py-2 bg-blue-600 text-white text-xs font-semibold rounded-lg"
+          className="mt-4 px-4 py-2 bg-[#ed7a1c] hover:bg-[#d96a12] text-white text-xs font-semibold rounded-lg transition"
         >
           Try Again
         </button>
@@ -47,8 +47,8 @@ export default function DashboardPage() {
       title: 'Total Jobs',
       value: stats?.totalJobs ?? 0,
       icon: Briefcase,
-      color: 'text-blue-600',
-      bg: 'bg-blue-50'
+      color: 'text-[#ed7a1c]',
+      bg: 'bg-orange-50'
     },
     {
       title: 'Open Jobs',
@@ -68,8 +68,8 @@ export default function DashboardPage() {
       title: 'Total Applications',
       value: stats?.totalApplications ?? 0,
       icon: Users,
-      color: 'text-indigo-600',
-      bg: 'bg-indigo-50'
+      color: 'text-[#ed7a1c]',
+      bg: 'bg-orange-50'
     },
     {
       title: 'New Applications',
@@ -103,7 +103,7 @@ export default function DashboardPage() {
         <div className="flex items-center gap-3">
           <Link
             href="/admin/jobs/create"
-            className="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-semibold shadow-xs transition"
+            className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#ed7a1c] hover:bg-[#d96a12] active:bg-[#b8540b] text-white rounded-xl text-sm font-semibold shadow-sm transition hover:shadow-orange-500/25"
           >
             <Plus className="w-4 h-4" />
             Create Job
@@ -152,7 +152,7 @@ export default function DashboardPage() {
             <h2 className="text-base font-bold text-slate-900">Recent Jobs</h2>
             <Link
               href="/admin/jobs"
-              className="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1"
+              className="text-xs font-semibold text-[#ed7a1c] hover:text-[#d96a12] flex items-center gap-1 transition"
             >
               View all
               <ChevronRight className="w-3.5 h-3.5" />
@@ -191,14 +191,14 @@ export default function DashboardPage() {
                         <StatusBadge status={job.status} type="job" />
                       </td>
                       <td className="px-6 py-3.5 text-center">
-                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-blue-50 text-blue-700">
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-orange-50 text-[#ed7a1c] border border-orange-200/60">
                           {job.applicationCount}
                         </span>
                       </td>
                       <td className="px-6 py-3.5 text-right">
                         <Link
                           href={`/admin/jobs/${job.jobId}/applications`}
-                          className="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 hover:text-blue-700"
+                          className="inline-flex items-center gap-1 text-xs font-semibold text-[#ed7a1c] hover:text-[#d96a12] transition"
                         >
                           Candidates
                           <ArrowUpRight className="w-3.5 h-3.5" />
@@ -219,7 +219,7 @@ export default function DashboardPage() {
               <h2 className="text-base font-bold text-slate-900">Recent Applications</h2>
               <Link
                 href="/admin/applications"
-                className="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1"
+                className="text-xs font-semibold text-[#ed7a1c] hover:text-[#d96a12] flex items-center gap-1 transition"
               >
                 View all
                 <ChevronRight className="w-3.5 h-3.5" />

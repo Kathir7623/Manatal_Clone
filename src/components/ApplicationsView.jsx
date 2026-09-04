@@ -132,7 +132,7 @@ export default function ApplicationsView() {
               setSearchTerm(e.target.value);
               setPage(1);
             }}
-            className="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition"
+            className="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-orange-100 focus:border-[#ed7a1c] transition"
           />
         </div>
 
@@ -144,7 +144,7 @@ export default function ApplicationsView() {
               setStatusFilter(e.target.value);
               setPage(1);
             }}
-            className="px-3 py-1.5 rounded-lg border border-slate-300 text-xs font-medium bg-white focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 text-slate-700"
+            className="px-3 py-1.5 rounded-lg border border-slate-300 text-xs font-medium bg-white focus:outline-none focus:ring-2 focus:ring-orange-100 focus:border-[#ed7a1c] text-slate-700"
           >
             <option value="ALL">All Application Statuses</option>
             {STATUS_OPTIONS.map((st) => (
@@ -228,7 +228,7 @@ export default function ApplicationsView() {
                             value={app.status}
                             onChange={(e) => handleStatusChange(app._id, e.target.value)}
                             disabled={updateStatusMutation.isPending}
-                            className="text-xs font-semibold rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-slate-700 shadow-2xs focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 cursor-pointer"
+                            className="text-xs font-semibold rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-slate-700 shadow-2xs focus:outline-none focus:ring-2 focus:ring-orange-100 focus:border-[#ed7a1c] cursor-pointer"
                           >
                             {STATUS_OPTIONS.map((st) => (
                               <option key={st} value={st}>
@@ -262,7 +262,7 @@ export default function ApplicationsView() {
                               href={app.resume.url}
                               target="_blank"
                               rel="noreferrer"
-                              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 transition"
+                              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold text-[#ed7a1c] bg-orange-50 hover:bg-orange-100 border border-orange-200/60 transition"
                               title="Open Resume"
                             >
                               <FileText className="w-3.5 h-3.5" />
@@ -320,7 +320,7 @@ export default function ApplicationsView() {
                 <select
                   value={selectedApp.status}
                   onChange={(e) => handleStatusChange(selectedApp._id, e.target.value)}
-                  className="text-xs font-bold rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-slate-800 shadow-xs focus:ring-2 focus:ring-blue-100 focus:border-blue-500 cursor-pointer"
+                  className="text-xs font-bold rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-slate-800 shadow-xs focus:ring-2 focus:ring-orange-100 focus:border-[#ed7a1c] cursor-pointer"
                 >
                   {STATUS_OPTIONS.map((st) => (
                     <option key={st} value={st}>
@@ -339,7 +339,7 @@ export default function ApplicationsView() {
                   <span className="text-[11px] text-slate-400 block font-medium">Email</span>
                   <a
                     href={`mailto:${selectedApp.candidate?.email}`}
-                    className="font-semibold text-blue-600 hover:underline"
+                    className="font-semibold text-[#ed7a1c] hover:underline"
                   >
                     {selectedApp.candidate?.email}
                   </a>
@@ -447,7 +447,7 @@ export default function ApplicationsView() {
                     }
                     target="_blank"
                     rel="noreferrer"
-                    className="font-semibold text-blue-600 hover:underline flex items-center gap-1 mt-0.5"
+                    className="font-semibold text-[#ed7a1c] hover:underline flex items-center gap-1 mt-0.5"
                   >
                     <span>{selectedApp.candidate.linkedinProfile}</span>
                     <ExternalLink className="w-3.5 h-3.5" />
@@ -466,7 +466,7 @@ export default function ApplicationsView() {
                   {selectedApp.candidate.skills.map((skill, index) => (
                     <span
                       key={index}
-                      className="px-2.5 py-1 bg-blue-50 border border-blue-200 text-blue-800 text-xs font-semibold rounded-md"
+                      className="px-2.5 py-1 bg-orange-50 border border-orange-200 text-orange-800 text-xs font-semibold rounded-md"
                     >
                       {skill}
                     </span>
@@ -493,7 +493,7 @@ export default function ApplicationsView() {
               {selectedApp.resume?.url ? (
                 <div className="flex items-center justify-between p-3.5 rounded-xl border border-slate-200 bg-white shadow-xs">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 rounded-lg bg-orange-50 text-[#ed7a1c] flex items-center justify-center shrink-0">
                       <FileText className="w-5 h-5" />
                     </div>
                     <div>
@@ -514,7 +514,7 @@ export default function ApplicationsView() {
                       href={selectedApp.resume.url}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 transition"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-[#ed7a1c] bg-orange-50 hover:bg-orange-100 border border-orange-200/60 transition"
                     >
                       <ExternalLink className="w-3.5 h-3.5" />
                       <span>View</span>

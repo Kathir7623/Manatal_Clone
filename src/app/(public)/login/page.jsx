@@ -105,7 +105,7 @@ function CandidateLoginContent() {
         <div className="mt-6 pt-5 border-t border-slate-100">
           <p className="text-center text-xs text-slate-500">
             Don't have a candidate account yet?{' '}
-            <Link href="/register" className="font-semibold text-blue-600 hover:underline">
+            <Link href="/register" className="font-semibold text-[#ed7a1c] hover:underline">
               Create an account
             </Link>
           </p>

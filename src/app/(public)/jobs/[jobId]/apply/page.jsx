@@ -172,7 +172,7 @@ export default function ApplyPage() {
       <div className="max-w-xl mx-auto text-center py-12">
         <h2 className="text-xl font-bold text-slate-800">Job Not Found</h2>
         <p className="text-sm text-slate-500 mt-2">Could not locate position {jobId}.</p>
-        <Link href="/jobs" className="mt-4 inline-block text-sm text-blue-600 font-semibold">
+        <Link href="/jobs" className="mt-4 inline-block text-sm text-[#ed7a1c] hover:text-[#d96a12] font-semibold">
           Return to Jobs List
         </Link>
       </div>
@@ -189,7 +189,7 @@ export default function ApplyPage() {
         </p>
         <Link
           href="/jobs"
-          className="mt-6 inline-flex items-center gap-1.5 px-4 py-2 bg-amber-700 text-white rounded-lg text-sm font-semibold hover:bg-amber-800 transition"
+          className="mt-6 inline-flex items-center gap-1.5 px-4 py-2 bg-[#ed7a1c] hover:bg-[#d96a12] text-white rounded-lg text-sm font-semibold transition"
         >
           <ArrowLeft className="w-4 h-4" />
           View Open Positions
@@ -212,7 +212,7 @@ export default function ApplyPage() {
       <div className="bg-white rounded-xl border border-slate-200 p-8 sm:p-10 shadow-xs">
         {/* Header subtitle */}
         <div className="border-b border-slate-100 pb-4 mb-6">
-          <span className="text-xs font-mono font-bold px-2 py-0.5 bg-blue-50 text-blue-700 rounded">
+          <span className="text-xs font-mono font-bold px-2 py-0.5 bg-orange-50 text-[#ed7a1c] border border-orange-200/60 rounded">
             {job.jobId}
           </span>
           <h1 className="text-2xl font-bold text-slate-900 mt-1">
@@ -243,7 +243,7 @@ export default function ApplyPage() {
             <input
               type="text"
               placeholder="Full Name"
-              className={`w-full rounded-md border px-3.5 py-2 text-sm shadow-2xs focus:outline-none focus:ring-1 focus:ring-blue-500 ${
+              className={`w-full rounded-md border px-3.5 py-2 text-sm shadow-2xs focus:outline-none focus:ring-1 focus:ring-[#ed7a1c] focus:border-[#ed7a1c] ${
                 errors.name ? 'border-rose-400' : 'border-slate-300'
               }`}
               {...register('name', { required: 'Full Name is required' })}
@@ -259,7 +259,7 @@ export default function ApplyPage() {
             <input
               type="date"
               placeholder="Date of Birth"
-              className={`w-full rounded-md border px-3.5 py-2 text-sm shadow-2xs focus:outline-none focus:ring-1 focus:ring-blue-500 ${
+              className={`w-full rounded-md border px-3.5 py-2 text-sm shadow-2xs focus:outline-none focus:ring-1 focus:ring-[#ed7a1c] focus:border-[#ed7a1c] ${
                 errors.dateOfBirth ? 'border-rose-400' : 'border-slate-300'
               }`}
               {...register('dateOfBirth', { required: 'Date of Birth is required' })}
@@ -277,7 +277,7 @@ export default function ApplyPage() {
             <input
               type="email"
               placeholder="Email"
-              className={`w-full rounded-md border px-3.5 py-2 text-sm shadow-2xs focus:outline-none focus:ring-1 focus:ring-blue-500 ${
+              className={`w-full rounded-md border px-3.5 py-2 text-sm shadow-2xs focus:outline-none focus:ring-1 focus:ring-[#ed7a1c] focus:border-[#ed7a1c] ${
                 errors.email ? 'border-rose-400' : 'border-slate-300'
               }`}
               {...register('email', {
@@ -299,7 +299,7 @@ export default function ApplyPage() {
             <input
               type="tel"
               placeholder="Phone"
-              className={`w-full rounded-md border px-3.5 py-2 text-sm shadow-2xs focus:outline-none focus:ring-1 focus:ring-blue-500 ${
+              className={`w-full rounded-md border px-3.5 py-2 text-sm shadow-2xs focus:outline-none focus:ring-1 focus:ring-[#ed7a1c] focus:border-[#ed7a1c] ${
                 errors.phone ? 'border-rose-400' : 'border-slate-300'
               }`}
               {...register('phone', { required: 'Phone is required' })}
@@ -315,7 +315,7 @@ export default function ApplyPage() {
             <input
               type="text"
               placeholder="Current Company"
-              className={`w-full rounded-md border px-3.5 py-2 text-sm shadow-2xs focus:outline-none focus:ring-1 focus:ring-blue-500 ${
+              className={`w-full rounded-md border px-3.5 py-2 text-sm shadow-2xs focus:outline-none focus:ring-1 focus:ring-[#ed7a1c] focus:border-[#ed7a1c] ${
                 errors.currentCompany ? 'border-rose-400' : 'border-slate-300'
               }`}
               {...register('currentCompany', { required: 'Current Company is required' })}
@@ -331,7 +331,7 @@ export default function ApplyPage() {
               Total Years of Experience: <span className="text-slate-900 font-bold">*</span>
             </label>
             <select
-              className={`w-full rounded-md border px-3.5 py-2 text-sm bg-white shadow-2xs focus:outline-none focus:ring-1 focus:ring-blue-500 ${
+              className={`w-full rounded-md border px-3.5 py-2 text-sm bg-white shadow-2xs focus:outline-none focus:ring-1 focus:ring-[#ed7a1c] focus:border-[#ed7a1c] ${
                 errors.experience ? 'border-rose-400' : 'border-slate-300'
               }`}
               {...register('experience', { required: 'Total Years of Experience is required' })}
@@ -358,13 +358,13 @@ export default function ApplyPage() {
               <input
                 type="text"
                 placeholder="Current Salary (CTC)"
-                className={`rounded-md border px-3.5 py-2 text-sm shadow-2xs focus:outline-none focus:ring-1 focus:ring-blue-500 ${
+                className={`rounded-md border px-3.5 py-2 text-sm shadow-2xs focus:outline-none focus:ring-1 focus:ring-[#ed7a1c] focus:border-[#ed7a1c] ${
                   errors.currentSalaryAmount ? 'border-rose-400' : 'border-slate-300'
                 }`}
                 {...register('currentSalaryAmount', { required: 'Current Salary is required' })}
               />
               <select
-                className="rounded-md border border-slate-300 px-3.5 py-2 text-sm bg-white shadow-2xs focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="rounded-md border border-slate-300 px-3.5 py-2 text-sm bg-white shadow-2xs focus:outline-none focus:ring-1 focus:ring-[#ed7a1c] focus:border-[#ed7a1c]"
                 {...register('currentSalaryCurrency')}
               >
                 {CURRENCIES.map((curr) => (
@@ -374,7 +374,7 @@ export default function ApplyPage() {
                 ))}
               </select>
               <select
-                className="rounded-md border border-slate-300 px-3.5 py-2 text-sm bg-white shadow-2xs focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="rounded-md border border-slate-300 px-3.5 py-2 text-sm bg-white shadow-2xs focus:outline-none focus:ring-1 focus:ring-[#ed7a1c] focus:border-[#ed7a1c]"
                 {...register('currentSalaryFrequency')}
               >
                 {FREQUENCIES.map((freq) => (
@@ -398,13 +398,13 @@ export default function ApplyPage() {
               <input
                 type="text"
                 placeholder="Expected Salary (CTC)"
-                className={`rounded-md border px-3.5 py-2 text-sm shadow-2xs focus:outline-none focus:ring-1 focus:ring-blue-500 ${
+                className={`rounded-md border px-3.5 py-2 text-sm shadow-2xs focus:outline-none focus:ring-1 focus:ring-[#ed7a1c] focus:border-[#ed7a1c] ${
                   errors.expectedSalaryAmount ? 'border-rose-400' : 'border-slate-300'
                 }`}
                 {...register('expectedSalaryAmount', { required: 'Expected Salary is required' })}
               />
               <select
-                className="rounded-md border border-slate-300 px-3.5 py-2 text-sm bg-white shadow-2xs focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="rounded-md border border-slate-300 px-3.5 py-2 text-sm bg-white shadow-2xs focus:outline-none focus:ring-1 focus:ring-[#ed7a1c] focus:border-[#ed7a1c]"
                 {...register('expectedSalaryCurrency')}
               >
                 {CURRENCIES.map((curr) => (
@@ -414,7 +414,7 @@ export default function ApplyPage() {
                 ))}
               </select>
               <select
-                className="rounded-md border border-slate-300 px-3.5 py-2 text-sm bg-white shadow-2xs focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="rounded-md border border-slate-300 px-3.5 py-2 text-sm bg-white shadow-2xs focus:outline-none focus:ring-1 focus:ring-[#ed7a1c] focus:border-[#ed7a1c]"
                 {...register('expectedSalaryFrequency')}
               >
                 {FREQUENCIES.map((freq) => (
@@ -437,7 +437,7 @@ export default function ApplyPage() {
             <input
               type="text"
               placeholder="Current Location"
-              className={`w-full rounded-md border px-3.5 py-2 text-sm shadow-2xs focus:outline-none focus:ring-1 focus:ring-blue-500 ${
+              className={`w-full rounded-md border px-3.5 py-2 text-sm shadow-2xs focus:outline-none focus:ring-1 focus:ring-[#ed7a1c] focus:border-[#ed7a1c] ${
                 errors.currentLocation ? 'border-rose-400' : 'border-slate-300'
               }`}
               {...register('currentLocation', { required: 'Current Location is required' })}
@@ -455,7 +455,7 @@ export default function ApplyPage() {
             <input
               type="text"
               placeholder="Linkedin Profile Link"
-              className={`w-full rounded-md border px-3.5 py-2 text-sm shadow-2xs focus:outline-none focus:ring-1 focus:ring-blue-500 ${
+              className={`w-full rounded-md border px-3.5 py-2 text-sm shadow-2xs focus:outline-none focus:ring-1 focus:ring-[#ed7a1c] focus:border-[#ed7a1c] ${
                 errors.linkedinProfile ? 'border-rose-400' : 'border-slate-300'
               }`}
               {...register('linkedinProfile', { required: 'Linkedin Profile Link is required' })}
@@ -471,7 +471,7 @@ export default function ApplyPage() {
               Notice Period: <span className="text-slate-900 font-bold">*</span>
             </label>
             <select
-              className={`w-full rounded-md border px-3.5 py-2 text-sm bg-white shadow-2xs focus:outline-none focus:ring-1 focus:ring-blue-500 ${
+              className={`w-full rounded-md border px-3.5 py-2 text-sm bg-white shadow-2xs focus:outline-none focus:ring-1 focus:ring-[#ed7a1c] focus:border-[#ed7a1c] ${
                 errors.noticePeriod ? 'border-rose-400' : 'border-slate-300'
               }`}
               {...register('noticePeriod', { required: 'Notice Period is required' })}
@@ -499,7 +499,7 @@ export default function ApplyPage() {
                 <input
                   type="radio"
                   value="Yes"
-                  className="text-blue-600 focus:ring-blue-500"
+                  className="text-[#ed7a1c] focus:ring-[#ed7a1c]"
                   {...register('servingNoticePeriod')}
                 />
                 <span>Yes</span>
@@ -508,7 +508,7 @@ export default function ApplyPage() {
                 <input
                   type="radio"
                   value="No"
-                  className="text-blue-600 focus:ring-blue-500"
+                  className="text-[#ed7a1c] focus:ring-[#ed7a1c]"
                   {...register('servingNoticePeriod')}
                 />
                 <span>No</span>
@@ -524,7 +524,7 @@ export default function ApplyPage() {
             <input
               type="date"
               placeholder="Last Working Day"
-              className="w-full rounded-md border border-slate-300 px-3.5 py-2 text-sm shadow-2xs focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full rounded-md border border-slate-300 px-3.5 py-2 text-sm shadow-2xs focus:outline-none focus:ring-1 focus:ring-[#ed7a1c] focus:border-[#ed7a1c]"
               {...register('lastWorkingDay')}
             />
           </div>
@@ -566,13 +566,13 @@ export default function ApplyPage() {
             <label className="flex items-center gap-2 cursor-pointer text-xs text-slate-700">
               <input
                 type="checkbox"
-                className="rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                className="rounded border-slate-300 text-[#ed7a1c] focus:ring-[#ed7a1c]"
                 {...register('termsAgreed')}
               />
               <span>
                 I agree to the{' '}
-                <span className="text-blue-600 hover:underline">terms and conditions</span> &{' '}
-                <span className="text-blue-600 hover:underline">privacy policy</span>
+                <span className="text-[#ed7a1c] font-medium hover:underline">terms and conditions</span> &{' '}
+                <span className="text-[#ed7a1c] font-medium hover:underline">privacy policy</span>
               </span>
             </label>
           </div>
@@ -582,7 +582,7 @@ export default function ApplyPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="inline-flex items-center justify-center px-6 py-2.5 bg-[#0d6efd] hover:bg-blue-700 disabled:opacity-50 text-white font-medium text-sm rounded-md shadow-2xs transition"
+              className="inline-flex items-center justify-center px-7 py-2.5 bg-[#ed7a1c] hover:bg-[#d96a12] active:bg-[#b8540b] disabled:opacity-50 text-white font-semibold text-sm rounded-lg shadow-sm transition hover:shadow-orange-500/25"
             >
               {isSubmitting ? 'Submitting Application...' : 'Apply'}
             </button>

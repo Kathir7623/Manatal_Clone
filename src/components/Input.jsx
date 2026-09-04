@@ -32,7 +32,7 @@ const Input = forwardRef(
           className={`w-full rounded-lg border px-3.5 py-2 text-sm shadow-sm transition-colors placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-offset-0 ${
             error
               ? 'border-rose-400 focus:border-rose-500 focus:ring-rose-200'
-              : 'border-slate-300 focus:border-blue-500 focus:ring-blue-100'
+              : 'border-slate-300 focus:border-[#ed7a1c] focus:ring-[#ed7a1c]/20'
           } ${className}`}
           {...props}
         />

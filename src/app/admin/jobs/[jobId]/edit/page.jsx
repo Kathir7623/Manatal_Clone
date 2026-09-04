@@ -43,7 +43,7 @@ export default function EditJobPage() {
     return (
       <div className="p-8 text-center text-rose-600">
         <p className="font-semibold">Unable to find job {jobId}</p>
-        <Link href="/admin/jobs" className="mt-4 inline-block text-xs text-blue-600 font-semibold">
+        <Link href="/admin/jobs" className="mt-4 inline-block text-xs text-[#ed7a1c] hover:text-[#d96a12] font-semibold">
           Return to Jobs List
         </Link>
       </div>

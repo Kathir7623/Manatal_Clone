@@ -61,7 +61,7 @@ export default function CandidateRegisterPage() {
 
       <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-md">
         <div className="text-center mb-6">
-          <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mx-auto mb-3 border border-blue-200">
+          <div className="w-12 h-12 rounded-xl bg-orange-50 text-[#ed7a1c] flex items-center justify-center mx-auto mb-3 border border-orange-200">
             <UserPlus className="w-6 h-6" />
           </div>
           <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Create Candidate Account</h1>
@@ -136,7 +136,7 @@ export default function CandidateRegisterPage() {
               Years of Experience
             </label>
             <select
-              className="w-full rounded-md border border-slate-300 px-3.5 py-2 text-sm bg-white shadow-2xs focus:outline-none focus:ring-1 focus:ring-blue-500 text-slate-800"
+              className="w-full rounded-md border border-slate-300 px-3.5 py-2 text-sm bg-white shadow-2xs focus:outline-none focus:ring-1 focus:ring-[#ed7a1c] focus:border-[#ed7a1c] text-slate-800"
               {...register('experience')}
             >
               <option value="0 - 1 Years">0 - 1 Years</option>
@@ -156,7 +156,7 @@ export default function CandidateRegisterPage() {
         <div className="mt-6 pt-5 border-t border-slate-100 text-center">
           <p className="text-xs text-slate-500">
             Already have an account?{' '}
-            <Link href="/login" className="font-semibold text-blue-600 hover:underline">
+            <Link href="/login" className="font-semibold text-[#ed7a1c] hover:underline">
               Sign In
             </Link>
           </p>

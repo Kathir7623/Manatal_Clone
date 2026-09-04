@@ -81,7 +81,7 @@ export default function AdminJobsPage() {
 
         <Link
           href="/admin/jobs/create"
-          className="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-semibold shadow-xs transition"
+          className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#ed7a1c] hover:bg-[#d96a12] active:bg-[#b8540b] text-white rounded-xl text-sm font-semibold shadow-sm transition hover:shadow-orange-500/25"
         >
           <Plus className="w-4 h-4" />
           Create New Job
@@ -100,7 +100,7 @@ export default function AdminJobsPage() {
               setSearchTerm(e.target.value);
               setPage(1);
             }}
-            className="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition"
+            className="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-orange-100 focus:border-[#ed7a1c] transition"
           />
         </div>
 
@@ -112,7 +112,7 @@ export default function AdminJobsPage() {
               setStatusFilter(e.target.value);
               setPage(1);
             }}
-            className="px-3 py-1.5 rounded-lg border border-slate-300 text-xs font-medium bg-white focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 text-slate-700"
+            className="px-3 py-1.5 rounded-lg border border-slate-300 text-xs font-medium bg-white focus:outline-none focus:ring-2 focus:ring-orange-100 focus:border-[#ed7a1c] text-slate-700"
           >
             <option value="ALL">All Statuses</option>
             <option value="OPEN">Open Only</option>
@@ -167,7 +167,7 @@ export default function AdminJobsPage() {
                       <td className="px-6 py-4 text-center">
                         <Link
                           href={`/admin/jobs/${job.jobId}/applications`}
-                          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-700 hover:bg-blue-100 transition"
+                          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-orange-50 text-[#ed7a1c] border border-orange-200/60 hover:bg-orange-100 transition"
                           title="View received applications"
                         >
                           <Users className="w-3.5 h-3.5" />
@@ -192,7 +192,7 @@ export default function AdminJobsPage() {
                           {/* Edit */}
                           <Link
                             href={`/admin/jobs/${job.jobId}/edit`}
-                            className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition"
+                            className="p-1.5 text-slate-400 hover:text-[#ed7a1c] hover:bg-orange-50 rounded-lg transition"
                             title="Edit Job"
                           >
                             <Edit2 className="w-4 h-4" />

@@ -10,7 +10,7 @@ const Loader = ({ message = 'Loading...', size = 'default' }) => {
 
   return (
     <div className="flex flex-col items-center justify-center p-8 text-slate-500 gap-3">
-      <Loader2 className={`${sizeClasses[size] || sizeClasses.default} animate-spin text-blue-600`} />
+      <Loader2 className={`${sizeClasses[size] || sizeClasses.default} animate-spin text-[#ed7a1c]`} />
       {message && <p className="text-sm font-medium">{message}</p>}
     </div>
   );

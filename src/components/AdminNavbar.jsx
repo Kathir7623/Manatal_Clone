@@ -40,20 +40,20 @@ const AdminNavbar = () => {
   return (
     <header className="bg-white border-b border-slate-200 sticky top-0 z-40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
+        <div className="flex justify-between h-18 sm:h-20 items-center">
           <div className="flex items-center gap-8">
             <Link href="/admin/dashboard" className="flex items-center gap-3">
               <img
                 src="/vivantify-logo.png"
                 alt="Vivantify Logo"
-                className="h-7 w-auto object-contain"
+                className="h-10 sm:h-11 w-auto object-contain"
               />
-              <span className="text-[10px] uppercase tracking-wider font-bold bg-slate-900 text-white px-2 py-0.5 rounded">
+              <span className="text-[10px] uppercase tracking-wider font-bold bg-[#ed7a1c] text-white px-2.5 py-0.5 rounded-full shadow-xs">
                 Recruiter ATS
               </span>
             </Link>
 
-            <nav className="hidden md:flex items-center gap-1">
+            <nav className="hidden md:flex items-center gap-1.5">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const active = isActive(item.href);
@@ -61,13 +61,13 @@ const AdminNavbar = () => {
                   <Link
                     key={item.name}
                     href={item.href}
-                    className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition ${
+                    className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-medium transition ${
                       active
-                        ? 'bg-blue-50 text-blue-700 font-semibold'
+                        ? 'bg-orange-50 text-[#ed7a1c] font-bold border border-orange-200/70 shadow-2xs'
                         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                     }`}
                   >
-                    <Icon className={`w-4 h-4 ${active ? 'text-blue-600' : 'text-slate-400'}`} />
+                    <Icon className={`w-4 h-4 ${active ? 'text-[#ed7a1c]' : 'text-slate-400'}`} />
                     {item.name}
                   </Link>
                 );

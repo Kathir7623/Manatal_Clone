@@ -65,7 +65,7 @@ export default function MyApplicationsPage() {
 
         <Link
           href="/jobs"
-          className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold shadow-xs transition"
+          className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-[#ed7a1c] hover:bg-[#d96a12] active:bg-[#b8540b] text-white rounded-xl text-xs font-bold shadow-xs transition hover:shadow-orange-500/25"
         >
           <span>Explore More Jobs</span>
           <ArrowRight className="w-4 h-4" />
@@ -106,7 +106,7 @@ export default function MyApplicationsPage() {
             <p className="text-xs mt-1 text-slate-500">{error?.message}</p>
             <button
               onClick={() => refetch()}
-              className="mt-3 px-3 py-1.5 bg-blue-600 text-white rounded-md text-xs font-semibold"
+              className="mt-3 px-3 py-1.5 bg-[#ed7a1c] hover:bg-[#d96a12] text-white rounded-md text-xs font-semibold"
             >
               Retry
             </button>
@@ -120,7 +120,7 @@ export default function MyApplicationsPage() {
             </p>
             <Link
               href="/jobs"
-              className="mt-4 inline-flex items-center gap-1 px-4 py-2 bg-blue-600 text-white rounded-lg text-xs font-semibold hover:bg-blue-700 transition"
+              className="mt-4 inline-flex items-center gap-1 px-4 py-2 bg-[#ed7a1c] hover:bg-[#d96a12] active:bg-[#b8540b] text-white rounded-lg text-xs font-semibold transition hover:shadow-orange-500/25"
             >
               Browse Open Jobs
             </Link>
@@ -134,7 +134,7 @@ export default function MyApplicationsPage() {
               >
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs font-bold px-2 py-0.5 bg-blue-50 text-blue-700 rounded border border-blue-200">
+                    <span className="font-mono text-xs font-bold px-2 py-0.5 bg-orange-50 text-[#ed7a1c] rounded border border-orange-200/60">
                       {app.job?.jobId || 'JOB-REF'}
                     </span>
                     <span className="font-mono text-xs text-slate-400">
@@ -160,7 +160,7 @@ export default function MyApplicationsPage() {
                         href={app.resume.url}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center gap-1 text-xs text-slate-600 hover:text-blue-600 font-medium"
+                        className="inline-flex items-center gap-1 text-xs text-slate-600 hover:text-[#ed7a1c] font-medium transition"
                       >
                         <FileText className="w-3.5 h-3.5 text-slate-400" />
                         <span>View Submitted Resume ({app.resume.originalName})</span>
@@ -182,7 +182,7 @@ export default function MyApplicationsPage() {
                   {app.job?.jobId && (
                     <Link
                       href={`/jobs/${app.job.jobId}`}
-                      className="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1"
+                      className="text-xs font-semibold text-[#ed7a1c] hover:text-[#d96a12] flex items-center gap-1 transition"
                     >
                       <span>View Job Description</span>
                       <ArrowRight className="w-3.5 h-3.5" />

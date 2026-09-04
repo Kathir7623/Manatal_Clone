@@ -145,7 +145,7 @@ const JobForm = ({ initialData = {}, onSubmit, isSubmitting = false, mode = 'cre
               Employment Type <span className="text-rose-500">*</span>
             </label>
             <select
-              className="w-full rounded-lg border border-slate-300 px-3.5 py-2 text-sm shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition text-slate-800"
+              className="w-full rounded-lg border border-slate-300 px-3.5 py-2 text-sm shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-orange-100 focus:border-[#ed7a1c] transition text-slate-800"
               {...register('employmentType', { required: true })}
             >
               <option value="Sub-contractor">Sub-contractor</option>
@@ -204,7 +204,7 @@ const JobForm = ({ initialData = {}, onSubmit, isSubmitting = false, mode = 'cre
             <textarea
               rows={3}
               placeholder="We are seeking a ServiceNow Senior Developer with strong hands-on experience in ServiceNow development, customization, scripting, workflows..."
-              className="w-full rounded-lg border border-slate-300 px-3.5 py-2 text-sm shadow-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition"
+              className="w-full rounded-lg border border-slate-300 px-3.5 py-2 text-sm shadow-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-100 focus:border-[#ed7a1c] transition"
               {...register('aboutRole')}
             />
           </div>
@@ -216,7 +216,7 @@ const JobForm = ({ initialData = {}, onSubmit, isSubmitting = false, mode = 'cre
             <textarea
               rows={4}
               placeholder="The role involves designing, developing, implementing, customizing, and maintaining solutions based on business requirements..."
-              className="w-full rounded-lg border border-slate-300 px-3.5 py-2 text-sm shadow-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition"
+              className="w-full rounded-lg border border-slate-300 px-3.5 py-2 text-sm shadow-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-100 focus:border-[#ed7a1c] transition"
               {...register('description', { required: 'Job description is required' })}
             />
             {errors.description && (
@@ -235,7 +235,7 @@ const JobForm = ({ initialData = {}, onSubmit, isSubmitting = false, mode = 'cre
         <textarea
           rows={5}
           placeholder="Develop and customize ServiceNow applications, workflows, scripts, and business processes.&#10;Design, implement, and enhance solutions based on customer requirements.&#10;Handle incidents, problems, changes, and service requests within the platform.&#10;Design and develop end-to-end integrations between ServiceNow and external systems."
-          className="w-full rounded-lg border border-slate-300 px-3.5 py-2 text-sm shadow-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition font-mono text-xs"
+          className="w-full rounded-lg border border-slate-300 px-3.5 py-2 text-sm shadow-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-100 focus:border-[#ed7a1c] transition font-mono text-xs"
           {...register('responsibilities')}
         />
       </div>
@@ -296,20 +296,20 @@ const JobForm = ({ initialData = {}, onSubmit, isSubmitting = false, mode = 'cre
 
         {/* Required Skills */}
         <div>
-          <label className="block text-xs font-bold text-blue-700 uppercase tracking-wider mb-1.5">
+          <label className="block text-xs font-bold text-[#ed7a1c] uppercase tracking-wider mb-1.5">
             Required Skills
           </label>
-          <div className="flex flex-wrap items-center gap-2 p-2.5 bg-blue-50/50 rounded-xl border border-blue-200">
+          <div className="flex flex-wrap items-center gap-2 p-2.5 bg-orange-50/50 rounded-xl border border-orange-200">
             {skills.map((tag) => (
               <span
                 key={tag}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-white border border-blue-200 text-xs font-semibold text-blue-800 rounded-lg shadow-2xs"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-white border border-orange-200 text-xs font-semibold text-orange-800 rounded-lg shadow-2xs"
               >
                 {tag}
                 <button
                   type="button"
                   onClick={() => handleRemoveTag(tag, skills, setSkills)}
-                  className="text-blue-400 hover:text-blue-700"
+                  className="text-orange-400 hover:text-orange-700"
                 >
                   <X className="w-3.5 h-3.5" />
                 </button>
@@ -327,12 +327,12 @@ const JobForm = ({ initialData = {}, onSubmit, isSubmitting = false, mode = 'cre
                     handleAddTag(e, skills, setSkills, newSkillInput, setNewSkillInput);
                   }
                 }}
-                className="text-xs px-2.5 py-1 rounded-md border border-blue-300 bg-white focus:outline-none focus:border-blue-500 w-40"
+                className="text-xs px-2.5 py-1 rounded-md border border-orange-300 bg-white focus:outline-none focus:border-[#ed7a1c] w-40"
               />
               <button
                 type="button"
                 onClick={(e) => handleAddTag(e, skills, setSkills, newSkillInput, setNewSkillInput)}
-                className="p-1 text-blue-700 font-bold"
+                className="p-1 text-[#ed7a1c] font-bold"
               >
                 <Plus className="w-4 h-4" />
               </button>
@@ -402,7 +402,7 @@ const JobForm = ({ initialData = {}, onSubmit, isSubmitting = false, mode = 'cre
           <textarea
             rows={3}
             placeholder="The ideal candidate should have 7–11 years of overall IT experience, with approximately 5 years of hands-on ServiceNow development, implementation, and enhancement experience..."
-            className="w-full rounded-lg border border-slate-300 px-3.5 py-2 text-sm shadow-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition"
+            className="w-full rounded-lg border border-slate-300 px-3.5 py-2 text-sm shadow-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-100 focus:border-[#ed7a1c] transition"
             {...register('candidateProfile')}
           />
         </div>
@@ -414,7 +414,7 @@ const JobForm = ({ initialData = {}, onSubmit, isSubmitting = false, mode = 'cre
           <textarea
             rows={4}
             placeholder="Competitive salary and benefits package&#10;Opportunities for professional growth and development&#10;A collaborative and inclusive work environment&#10;The opportunity to work on exciting and challenging projects with leading clients"
-            className="w-full rounded-lg border border-slate-300 px-3.5 py-2 text-sm shadow-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition font-mono text-xs"
+            className="w-full rounded-lg border border-slate-300 px-3.5 py-2 text-sm shadow-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-100 focus:border-[#ed7a1c] transition font-mono text-xs"
             {...register('benefits')}
           />
         </div>

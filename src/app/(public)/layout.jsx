@@ -16,15 +16,12 @@ export default function PublicLayout({ children }) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 mb-8">
             {/* About Vivantify */}
             <div id="about">
-              <div className="flex items-center gap-2.5 mb-3">
+              <div className="mb-4">
                 <img
                   src="/vivantify-logo.png"
                   alt="Vivantify Logo"
-                  className="h-8 w-auto object-contain"
+                  className="h-10 sm:h-12 w-auto object-contain"
                 />
-                <span className="text-xs bg-orange-50 text-orange-800 px-2.5 py-0.5 rounded-full font-semibold border border-orange-200">
-                  Technology Solutions
-                </span>
               </div>
               <p className="text-sm text-slate-600 max-w-md leading-relaxed">
                 <strong>Vivantify Technology Solutions</strong> delivers next-generation IT consulting, custom application development, enterprise cloud architectures, and specialized technology staffing. We partner with fast-growing enterprises and global leaders to accelerate digital transformation.
@@ -38,25 +35,25 @@ export default function PublicLayout({ children }) {
               </h4>
               <ul className="space-y-2.5 text-sm text-slate-600">
                 <li className="flex items-center gap-2.5">
-                  <Phone className="w-4 h-4 text-orange-600 shrink-0" />
+                  <Phone className="w-4 h-4 text-[#ed7a1c] shrink-0" />
                   <a
                     href="tel:+919366615960"
-                    className="hover:text-blue-600 font-semibold transition text-slate-900"
+                    className="hover:text-[#ed7a1c] font-semibold transition text-slate-900"
                   >
                     +91 9366615960
                   </a>
                 </li>
                 <li className="flex items-center gap-2.5">
-                  <Mail className="w-4 h-4 text-orange-600 shrink-0" />
+                  <Mail className="w-4 h-4 text-[#ed7a1c] shrink-0" />
                   <a
                     href="mailto:info@vivantify.com"
-                    className="hover:text-blue-600 font-medium transition"
+                    className="hover:text-[#ed7a1c] font-medium transition"
                   >
                     info@vivantify.com
                   </a>
                 </li>
                 <li className="flex items-start gap-2.5">
-                  <MapPin className="w-4 h-4 text-orange-600 shrink-0 mt-0.5" />
+                  <MapPin className="w-4 h-4 text-[#ed7a1c] shrink-0 mt-0.5" />
                   <span className="text-xs text-slate-600 leading-relaxed">
                     25, Subramaniam St, Olymbus, Bharathi Nagar, Ramanathapuram, Coimbatore, Tamil Nadu 641045
                   </span>

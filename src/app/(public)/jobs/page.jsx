@@ -67,7 +67,7 @@ export default function JobsPage() {
                 setSearchTerm(e.target.value);
                 setPage(1);
               }}
-              className="w-full pl-9 pr-3.5 py-2 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition"
+              className="w-full pl-9 pr-3.5 py-2 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-[#ed7a1c]/20 focus:border-[#ed7a1c] transition"
             />
           </div>
 
@@ -82,7 +82,7 @@ export default function JobsPage() {
                 setLocationFilter(e.target.value);
                 setPage(1);
               }}
-              className="w-full pl-9 pr-3.5 py-2 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition"
+              className="w-full pl-9 pr-3.5 py-2 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-[#ed7a1c]/20 focus:border-[#ed7a1c] transition"
             />
           </div>
 
@@ -94,7 +94,7 @@ export default function JobsPage() {
                 setEmploymentTypeFilter(e.target.value);
                 setPage(1);
               }}
-              className="w-full px-3.5 py-2 rounded-lg border border-slate-300 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition text-slate-700"
+              className="w-full px-3.5 py-2 rounded-lg border border-slate-300 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#ed7a1c]/20 focus:border-[#ed7a1c] transition text-slate-700"
             >
               <option value="">All Employment Types</option>
               <option value="Full Time">Full Time</option>
@@ -113,7 +113,7 @@ export default function JobsPage() {
                 setExperienceFilter(e.target.value);
                 setPage(1);
               }}
-              className="w-full px-3.5 py-2 rounded-lg border border-slate-300 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition text-slate-700"
+              className="w-full px-3.5 py-2 rounded-lg border border-slate-300 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#ed7a1c]/20 focus:border-[#ed7a1c] transition text-slate-700"
             >
               <option value="">All Experience Levels</option>
               <option value="0 - 1">0 - 1 Years (Entry Level)</option>
@@ -134,7 +134,7 @@ export default function JobsPage() {
           {(searchTerm || locationFilter || experienceFilter || employmentTypeFilter) && (
             <button
               onClick={handleResetFilters}
-              className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-700 font-medium transition"
+              className="inline-flex items-center gap-1 text-[#ed7a1c] hover:text-[#d96a12] font-semibold transition"
             >
               <RefreshCw className="w-3 h-3" />
               Reset Filters
@@ -169,7 +169,7 @@ export default function JobsPage() {
           {(searchTerm || locationFilter || experienceFilter || employmentTypeFilter) && (
             <button
               onClick={handleResetFilters}
-              className="mt-4 px-4 py-2 rounded-lg bg-blue-50 text-blue-600 font-medium text-xs hover:bg-blue-100 transition"
+              className="mt-4 px-4 py-2 rounded-lg bg-orange-50 text-[#ed7a1c] border border-orange-200 font-semibold text-xs hover:bg-orange-100 transition"
             >
               Clear All Filters
             </button>
