@@ -13,7 +13,8 @@ import {
   ExternalLink,
   FileText,
   AlertCircle,
-  ArrowRight
+  ArrowRight,
+  Download
 } from 'lucide-react';
 
 export default function MyApplicationsPage() {
@@ -154,17 +155,27 @@ export default function MyApplicationsPage() {
                     <span>Applied on {new Date(app.createdAt).toLocaleDateString()}</span>
                   </p>
 
-                  {app.resume?.url && (
-                    <div className="pt-2">
+                  {(app.resume?.url || app.resumeUrl) && (
+                    <div className="pt-2 flex flex-wrap items-center gap-3">
                       <a
-                        href={app.resume.url}
+                        href={app.resume?.url || app.resumeUrl}
                         target="_blank"
                         rel="noreferrer"
                         className="inline-flex items-center gap-1 text-xs text-slate-600 hover:text-[#ed7a1c] font-medium transition"
                       >
                         <FileText className="w-3.5 h-3.5 text-slate-400" />
-                        <span>View Submitted Resume ({app.resume.originalName})</span>
+                        <span>View Submitted Resume ({app.resume?.originalName || app.resumeFilename || 'Resume.pdf'})</span>
                         <ExternalLink className="w-3 h-3 ml-0.5" />
+                      </a>
+                      <a
+                        href={app.resume?.url || app.resumeUrl}
+                        download={app.resume?.originalName || app.resumeFilename || 'Resume.pdf'}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-semibold text-[#ed7a1c] hover:text-[#d96a12] bg-orange-50 hover:bg-orange-100 border border-orange-200/50 transition"
+                      >
+                        <Download className="w-3 h-3" />
+                        <span>Download</span>
                       </a>
                     </div>
                   )}

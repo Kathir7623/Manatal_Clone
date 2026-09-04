@@ -1,33 +1,91 @@
-import { supabase, isSupabaseConfigured } from '../lib/supabase';
+import { supabase, isSupabaseConfigured } from '../lib/supabase.js';
 
 // Helper to normalize application row
 export const normalizeApplication = (row) => {
   if (!row) return null;
+  const resumeUrl =
+    row.resume_url ||
+    row.resumeUrl ||
+    (row.resume && typeof row.resume === 'object' ? row.resume.url : '') ||
+    '';
+  const resumeFilename =
+    row.resume_filename ||
+    row.resumeFilename ||
+    (row.resume && typeof row.resume === 'object' ? row.resume.originalName : '') ||
+    'Resume.pdf';
+  const resumeSize =
+    row.resume_size ||
+    (row.resume && typeof row.resume === 'object' ? row.resume.size : null);
+  const resumeMime =
+    row.resume_mime_type ||
+    (row.resume && typeof row.resume === 'object' ? row.resume.mimeType : 'application/pdf');
+
+  const cand = row.candidates || row.candidate || {};
+  const exp =
+    cand.total_experience ||
+    cand.totalExperience ||
+    cand.experience ||
+    '';
+
+  const curCtc =
+    cand.current_ctc ||
+    cand.currentCtc ||
+    (cand.currentSalary && cand.currentSalary.amount
+      ? `${cand.currentSalary.amount} ${cand.currentSalary.currency || ''} / ${cand.currentSalary.frequency || ''}`
+      : '');
+
+  const expCtc =
+    cand.expected_ctc ||
+    cand.expectedCtc ||
+    (cand.expectedSalary && cand.expectedSalary.amount
+      ? `${cand.expectedSalary.amount} ${cand.expectedSalary.currency || ''} / ${cand.expectedSalary.frequency || ''}`
+      : '');
+
+  const lkIn =
+    cand.linkedin_url ||
+    cand.linkedinUrl ||
+    cand.linkedinProfile ||
+    '';
+
   return {
     _id: row.id,
     id: row.id,
-    applicationId: row.application_id,
+    applicationId: row.application_id || row.applicationId,
     status: row.status || 'NEW',
-    coverLetter: row.cover_letter || '',
-    resumeUrl: row.resume_url || '',
-    resumeFilename: row.resume_filename || 'Resume.pdf',
-    createdAt: row.created_at || new Date().toISOString(),
-    candidate: row.candidates
+    coverLetter: row.cover_letter || row.coverLetter || '',
+    resumeUrl: resumeUrl,
+    resumeFilename: resumeFilename,
+    resume: resumeUrl
       ? {
-          _id: row.candidates.id,
-          name: row.candidates.name,
-          email: row.candidates.email,
-          phone: row.candidates.phone,
-          totalExperience: row.candidates.total_experience,
-          currentLocation: row.candidates.current_location,
-          currentCompany: row.candidates.current_company,
-          currentCtc: row.candidates.current_ctc,
-          expectedCtc: row.candidates.expected_ctc,
-          noticePeriod: row.candidates.notice_period,
-          portfolioUrl: row.candidates.portfolio_url,
-          linkedinUrl: row.candidates.linkedin_url
+          url: resumeUrl,
+          originalName: resumeFilename,
+          size: resumeSize,
+          mimeType: resumeMime
         }
-      : row.candidate || {},
+      : null,
+    createdAt: row.created_at || row.createdAt || new Date().toISOString(),
+    candidate: {
+      _id: cand.id || cand._id,
+      name: cand.name || 'Candidate',
+      email: cand.email || '',
+      phone: cand.phone || '',
+      dateOfBirth: cand.date_of_birth || cand.dateOfBirth || '',
+      experience: exp || 'N/A',
+      totalExperience: exp || 'N/A',
+      currentLocation: cand.current_location || cand.currentLocation || '',
+      currentCompany: cand.current_company || cand.currentCompany || '',
+      currentCtc: curCtc,
+      currentSalary: curCtc ? { amount: curCtc } : null,
+      expectedCtc: expCtc,
+      expectedSalary: expCtc ? { amount: expCtc } : null,
+      noticePeriod: cand.notice_period || cand.noticePeriod || '',
+      servingNoticePeriod: cand.serving_notice_period || cand.servingNoticePeriod || '',
+      lastWorkingDay: cand.last_working_day || cand.lastWorkingDay || '',
+      portfolioUrl: cand.portfolio_url || cand.portfolioUrl || '',
+      linkedinProfile: lkIn,
+      linkedinUrl: lkIn,
+      skills: cand.skills || []
+    },
     job: row.jobs
       ? {
           _id: row.jobs.id,
@@ -66,15 +124,26 @@ export const applicationService = {
       name = formData.get('name');
       email = formData.get('email');
       phone = formData.get('phone');
-      totalExperience = formData.get('totalExperience');
-      currentLocation = formData.get('currentLocation');
-      currentCompany = formData.get('currentCompany');
-      currentCtc = formData.get('currentCtc');
-      expectedCtc = formData.get('expectedCtc');
-      noticePeriod = formData.get('noticePeriod');
-      portfolioUrl = formData.get('portfolioUrl');
-      linkedinUrl = formData.get('linkedinUrl');
-      coverLetter = formData.get('coverLetter');
+      totalExperience = formData.get('experience') || formData.get('totalExperience') || '';
+      currentLocation = formData.get('currentLocation') || '';
+      currentCompany = formData.get('currentCompany') || '';
+      const curAmt = formData.get('currentSalaryAmount');
+      currentCtc = curAmt
+        ? `${curAmt} ${formData.get('currentSalaryCurrency') || ''} / ${formData.get('currentSalaryFrequency') || ''}`
+        : (formData.get('currentCtc') || '');
+      const expAmt = formData.get('expectedSalaryAmount');
+      expectedCtc = expAmt
+        ? `${expAmt} ${formData.get('expectedSalaryCurrency') || ''} / ${formData.get('expectedSalaryFrequency') || ''}`
+        : (formData.get('expectedCtc') || '');
+      let np = formData.get('noticePeriod') || '';
+      const serving = formData.get('servingNoticePeriod');
+      if (serving) {
+        np = `${np} (Serving: ${serving})`;
+      }
+      noticePeriod = np;
+      portfolioUrl = formData.get('portfolioUrl') || '';
+      linkedinUrl = formData.get('linkedinProfile') || formData.get('linkedinUrl') || '';
+      coverLetter = formData.get('coverLetter') || '';
       resumeFile = formData.get('resume');
     } else {
       ({ jobId, name, email, phone, totalExperience, currentLocation, currentCompany, currentCtc, expectedCtc, noticePeriod, portfolioUrl, linkedinUrl, coverLetter, resume: resumeFile } = formData);
@@ -179,12 +248,21 @@ export const applicationService = {
       title: 'Open Position'
     };
 
+    let fallbackResumeUrl = '#';
+    try {
+      if (typeof window !== 'undefined' && resumeFile instanceof File) {
+        fallbackResumeUrl = URL.createObjectURL(resumeFile);
+      }
+    } catch {
+      fallbackResumeUrl = '#';
+    }
+
     const newApp = {
       id: crypto.randomUUID(),
       application_id: appId,
       status: 'NEW',
       cover_letter: coverLetter || '',
-      resume_url: '#',
+      resume_url: fallbackResumeUrl,
       resume_filename: resumeFile?.name || 'Resume.pdf',
       created_at: new Date().toISOString(),
       candidate: {
@@ -192,13 +270,15 @@ export const applicationService = {
         email,
         phone,
         totalExperience,
+        experience: totalExperience,
         currentLocation,
         currentCompany,
         currentCtc,
         expectedCtc,
         noticePeriod,
         portfolioUrl,
-        linkedinUrl
+        linkedinUrl,
+        linkedinProfile: linkedinUrl
       },
       job: {
         jobId: matchedJob.job_id || jobId,

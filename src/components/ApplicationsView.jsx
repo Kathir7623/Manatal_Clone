@@ -88,6 +88,40 @@ export default function ApplicationsView() {
     updateStatusMutation.mutate({ id: appId, status: newStatus });
   };
 
+  const [downloadingUrl, setDownloadingUrl] = useState(null);
+
+  const handleDownloadResume = async (url, filename = 'Resume.pdf') => {
+    if (!url || url === '#') {
+      alert('Resume file is not available for download.');
+      return;
+    }
+    setDownloadingUrl(url);
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error('Network response was not ok');
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setTimeout(() => window.URL.revokeObjectURL(blobUrl), 1000);
+    } catch (err) {
+      console.warn('Direct blob download failed, falling back to direct window download:', err);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      link.target = '_blank';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } finally {
+      setDownloadingUrl(null);
+    }
+  };
+
   return (
     <div className="space-y-6">
       {/* Top Header */}
@@ -257,17 +291,32 @@ export default function ApplicationsView() {
                             <span>View</span>
                           </button>
 
-                          {app.resume?.url && (
-                            <a
-                              href={app.resume.url}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold text-[#ed7a1c] bg-orange-50 hover:bg-orange-100 border border-orange-200/60 transition"
-                              title="Open Resume"
-                            >
-                              <FileText className="w-3.5 h-3.5" />
-                              <span>Resume</span>
-                            </a>
+                          {(app.resume?.url || app.resumeUrl) && (
+                            <div className="inline-flex items-center gap-1">
+                              <a
+                                href={app.resume?.url || app.resumeUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold text-[#ed7a1c] bg-orange-50 hover:bg-orange-100 border border-orange-200/60 transition"
+                                title="Open Resume in new tab"
+                              >
+                                <FileText className="w-3.5 h-3.5" />
+                                <span>Resume</span>
+                              </a>
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  handleDownloadResume(
+                                    app.resume?.url || app.resumeUrl,
+                                    app.resume?.originalName || app.resumeFilename || 'Resume.pdf'
+                                  )
+                                }
+                                className="p-1 text-slate-500 hover:text-[#ed7a1c] hover:bg-orange-50 rounded-lg transition cursor-pointer"
+                                title="Download Resume"
+                              >
+                                <Download className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
                           )}
                         </div>
                       </td>
@@ -490,43 +539,55 @@ export default function ApplicationsView() {
               <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
                 Resume Document
               </h4>
-              {selectedApp.resume?.url ? (
-                <div className="flex items-center justify-between p-3.5 rounded-xl border border-slate-200 bg-white shadow-xs">
+              {(selectedApp.resume?.url || selectedApp.resumeUrl) ? (
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl border border-slate-200 bg-white shadow-xs gap-3">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-orange-50 text-[#ed7a1c] flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 rounded-lg bg-orange-50 text-[#ed7a1c] flex items-center justify-center shrink-0 border border-orange-200/50">
                       <FileText className="w-5 h-5" />
                     </div>
                     <div>
-                      <span className="text-sm font-bold text-slate-900 block truncate max-w-xs">
-                        {selectedApp.resume.originalName}
+                      <span className="text-sm font-bold text-slate-900 block truncate max-w-xs sm:max-w-md">
+                        {selectedApp.resume?.originalName || selectedApp.resumeFilename || 'Resume.pdf'}
                       </span>
                       <span className="text-xs text-slate-400">
-                        {selectedApp.resume.size
+                        {selectedApp.resume?.size
                           ? `${(selectedApp.resume.size / (1024 * 1024)).toFixed(2)} MB • `
                           : ''}
-                        {selectedApp.resume.mimeType || 'Document'}
+                        PDF / Document
                       </span>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-2">
                     <a
-                      href={selectedApp.resume.url}
+                      href={selectedApp.resume?.url || selectedApp.resumeUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-[#ed7a1c] bg-orange-50 hover:bg-orange-100 border border-orange-200/60 transition"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold text-[#ed7a1c] bg-orange-50 hover:bg-orange-100 border border-orange-200/60 transition shadow-2xs"
+                      title="Open in new tab"
                     >
                       <ExternalLink className="w-3.5 h-3.5" />
                       <span>View</span>
                     </a>
-                    <a
-                      href={selectedApp.resume.url}
-                      download={selectedApp.resume.originalName}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition"
+                    <button
+                      type="button"
+                      disabled={downloadingUrl === (selectedApp.resume?.url || selectedApp.resumeUrl)}
+                      onClick={() =>
+                        handleDownloadResume(
+                          selectedApp.resume?.url || selectedApp.resumeUrl,
+                          selectedApp.resume?.originalName || selectedApp.resumeFilename || 'Resume.pdf'
+                        )
+                      }
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold text-white bg-[#ed7a1c] hover:bg-[#d96a12] active:bg-[#b8540b] disabled:opacity-50 transition shadow-xs cursor-pointer"
+                      title="Download resume to your computer"
                     >
                       <Download className="w-3.5 h-3.5" />
-                      <span>Download</span>
-                    </a>
+                      <span>
+                        {downloadingUrl === (selectedApp.resume?.url || selectedApp.resumeUrl)
+                          ? 'Downloading...'
+                          : 'Download'}
+                      </span>
+                    </button>
                   </div>
                 </div>
               ) : (
