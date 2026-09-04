@@ -8,7 +8,7 @@ import { useAuth } from '../../../context/AuthContext';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 import Loader from '../../../components/Loader';
-import { ShieldCheck, AlertCircle, Sparkles, ArrowLeft } from 'lucide-react';
+import { ShieldCheck, AlertCircle, ArrowLeft } from 'lucide-react';
 
 function AdminLoginContent() {
   const { login, isAuthenticated } = useAuth();
@@ -51,12 +51,6 @@ function AdminLoginContent() {
     }
   };
 
-  const handleFillDemo = () => {
-    setValue('email', 'admin@resume.com');
-    setValue('password', 'Admin@12345');
-    setLoginError('');
-  };
-
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
@@ -92,7 +86,7 @@ function AdminLoginContent() {
             <Input
               label="Email Address"
               type="email"
-              placeholder="admin@resume.com"
+              placeholder="recruiter@vivantify.com"
               required
               error={errors.email?.message}
               {...register('email', { required: 'Email is required' })}
@@ -101,7 +95,7 @@ function AdminLoginContent() {
             <Input
               label="Password"
               type="password"
-              placeholder="••••••••"
+              placeholder="Enter your password"
               required
               error={errors.password?.message}
               {...register('password', { required: 'Password is required' })}
@@ -116,18 +110,6 @@ function AdminLoginContent() {
               Sign In
             </Button>
           </form>
-
-          {/* Demo Credentials Fast Button */}
-          <div className="mt-6 pt-5 border-t border-slate-100">
-            <button
-              type="button"
-              onClick={handleFillDemo}
-              className="w-full inline-flex items-center justify-center gap-2 px-3 py-2 border border-dashed border-blue-300 rounded-lg text-xs font-medium text-blue-700 bg-blue-50/50 hover:bg-blue-100 transition"
-            >
-              <Sparkles className="w-3.5 h-3.5 text-blue-600" />
-              Fill Demo Admin Credentials (admin@resume.com)
-            </button>
-          </div>
         </div>
       </div>
     </div>

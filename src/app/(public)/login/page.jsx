@@ -8,7 +8,7 @@ import { useCandidateAuth } from '../../../context/CandidateAuthContext';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 import Loader from '../../../components/Loader';
-import { UserCheck, AlertCircle, ArrowLeft, Sparkles } from 'lucide-react';
+import { UserCheck, AlertCircle, ArrowLeft } from 'lucide-react';
 
 function CandidateLoginContent() {
   const { candidateLogin, isCandidateAuthenticated } = useCandidateAuth();
@@ -48,12 +48,6 @@ function CandidateLoginContent() {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleFillDemoCandidate = () => {
-    setValue('email', 'candidate@test.com');
-    setValue('password', 'Candidate@123');
-    setLoginError('');
   };
 
   return (
@@ -97,7 +91,7 @@ function CandidateLoginContent() {
           <Input
             label="Password"
             type="password"
-            placeholder="••••••••"
+            placeholder="Enter your password"
             required
             error={errors.password?.message}
             {...register('password', { required: 'Password is required' })}
@@ -108,16 +102,7 @@ function CandidateLoginContent() {
           </Button>
         </form>
 
-        <div className="mt-6 pt-5 border-t border-slate-100 space-y-3">
-          <button
-            type="button"
-            onClick={handleFillDemoCandidate}
-            className="w-full inline-flex items-center justify-center gap-2 px-3 py-2 border border-dashed border-orange-300 rounded-lg text-xs font-medium text-orange-700 bg-orange-50/50 hover:bg-orange-100 transition"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-orange-600" />
-            Fill Demo Candidate Credentials
-          </button>
-
+        <div className="mt-6 pt-5 border-t border-slate-100">
           <p className="text-center text-xs text-slate-500">
             Don't have a candidate account yet?{' '}
             <Link href="/register" className="font-semibold text-blue-600 hover:underline">
