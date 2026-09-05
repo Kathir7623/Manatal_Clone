@@ -29,7 +29,7 @@ export default function PublicLayout({ children }) {
             </div>
 
             {/* Contact Details */}
-            <div id="contact" className="md:pl-8">
+            <div id="contact" className="md:justify-self-end md:ml-auto">
               <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3">
                 Contact & Address
               </h4>
@@ -55,7 +55,8 @@ export default function PublicLayout({ children }) {
                 <li className="flex items-start gap-2.5">
                   <MapPin className="w-4 h-4 text-[#ed7a1c] shrink-0 mt-0.5" />
                   <span className="text-xs text-slate-600 leading-relaxed">
-                    25, Subramaniam St, Olymbus, Bharathi Nagar, Ramanathapuram, Coimbatore, Tamil Nadu 641045
+                    25, Subramaniam St, Olymbus, Bharathi Nagar,<br />
+                    Ramanathapuram, Coimbatore, Tamil Nadu 641045
                   </span>
                 </li>
               </ul>
