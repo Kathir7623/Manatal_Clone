@@ -185,32 +185,7 @@ export default function MyApplicationsPage() {
                           rel="noreferrer"
                           className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-semibold text-[#ed7a1c] hover:text-[#d96a12] bg-orange-50 hover:bg-orange-100 border border-orange-200/50 transition"
                         >
-                          <Download className="w-3 h-3" />
-                          <span>Download</span>
-                        </a>
-                      </div>
-                    )}
-
-                    {(app.candidate?.panCardUrl || app.panCardUrl) && (
-                      <div className="flex items-center gap-2">
-                        <a
-                          href={app.candidate?.panCardUrl || app.panCardUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex items-center gap-1 text-xs text-slate-600 hover:text-[#ed7a1c] font-medium transition"
-                        >
-                          <CreditCard className="w-3.5 h-3.5 text-slate-400" />
-                          <span>PAN Document</span>
-                          <ExternalLink className="w-3 h-3 ml-0.5" />
-                        </a>
-                        <a
-                          href={app.candidate?.panCardUrl || app.panCardUrl}
-                          download={app.candidate?.panCardFilename || app.panCardFilename || 'PAN_Card.pdf'}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-semibold text-[#ed7a1c] hover:text-[#d96a12] bg-orange-50 hover:bg-orange-100 border border-orange-200/50 transition"
-                        >
-                          <Download className="w-3 h-3" />
+                          <Download className="w-3.5 h-3.5" />
                           <span>Download</span>
                         </a>
                       </div>

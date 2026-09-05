@@ -164,16 +164,15 @@ export const applicationService = {
   // 1. Submit Candidate Application
   submitApplication: async (formData) => {
     // Read parameters whether passed as FormData or plain object
-    let jobId, name, email, phone, dateOfBirth, panCard, panDocument, totalExperience, currentLocation, currentCompany, currentCtc, expectedCtc, noticePeriod, servingNoticePeriod, lastWorkingDay, portfolioUrl, linkedinUrl, coverLetter, resumeFile;
+    let jobId, name, email, phone, dateOfBirth, panCard, totalExperience, currentLocation, currentCompany, currentCtc, expectedCtc, noticePeriod, servingNoticePeriod, lastWorkingDay, portfolioUrl, linkedinUrl, coverLetter, resumeFile;
 
     if (typeof FormData !== 'undefined' && formData instanceof FormData) {
       jobId = formData.get('jobId');
       name = formData.get('name');
       dateOfBirth = formData.get('dateOfBirth') || '';
-      panCard = formData.get('panCard') || '';
-      panDocument = formData.get('panDocument');
       email = formData.get('email');
       phone = formData.get('phone');
+      panCard = formData.get('panCard') || '';
       totalExperience = formData.get('experience') || formData.get('totalExperience') || '';
       currentLocation = formData.get('currentLocation') || '';
       currentCompany = formData.get('currentCompany') || '';
@@ -198,7 +197,7 @@ export const applicationService = {
       coverLetter = formData.get('coverLetter') || '';
       resumeFile = formData.get('resume');
     } else {
-      ({ jobId, name, dateOfBirth, panCard, panDocument, email, phone, totalExperience, currentLocation, currentCompany, currentCtc, expectedCtc, noticePeriod, servingNoticePeriod, lastWorkingDay, portfolioUrl, linkedinUrl, coverLetter, resume: resumeFile } = formData);
+      ({ jobId, name, dateOfBirth, email, phone, panCard, totalExperience, currentLocation, currentCompany, currentCtc, expectedCtc, noticePeriod, servingNoticePeriod, lastWorkingDay, portfolioUrl, linkedinUrl, coverLetter, resume: resumeFile } = formData);
     }
 
     if (!jobId || !name || !email || !phone) {
@@ -240,39 +239,16 @@ export const applicationService = {
         }
       }
 
-      // Step C: Upload PAN card document if provided
-      let panUrl = '';
-      let panFilename = '';
-      if (panDocument && typeof panDocument !== 'string') {
-        const fileExt = panDocument.name.split('.').pop();
-        const safeName = `pan_${Date.now()}_${Math.random().toString(36).slice(2, 8)}.${fileExt}`;
-
-        const { data: uploadPanData, error: uploadPanErr } = await supabase.storage
-          .from('resumes')
-          .upload(safeName, panDocument, {
-            cacheControl: '3600',
-            upsert: false
-          });
-
-        if (!uploadPanErr && uploadPanData) {
-          const { data: urlPanData } = supabase.storage.from('resumes').getPublicUrl(uploadPanData.path);
-          panUrl = urlPanData.publicUrl;
-          panFilename = panDocument.name;
-        }
-      }
-
       // Construct metadata JSON payload for fields not in default Postgres schema
       const metadataPayload = JSON.stringify({
         panCard: cleanPan,
-        panCardUrl: panUrl,
-        panCardFilename: panFilename,
         dateOfBirth: dateOfBirth || '',
         servingNoticePeriod: servingNoticePeriod || '',
         lastWorkingDay: lastWorkingDay || '',
         coverLetter: coverLetter || ''
       });
 
-      // Step D: Upsert candidate in 'candidates' table
+      // Step C: Upsert candidate in 'candidates' table
       const { data: candidate, error: candErr } = await supabase
         .from('candidates')
         .insert({
@@ -293,7 +269,7 @@ export const applicationService = {
 
       if (candErr) throw new Error(candErr.message);
 
-      // Step E: Insert into 'applications' table
+      // Step D: Insert into 'applications' table
       const { data: application, error: appErr } = await supabase
         .from('applications')
         .insert({
@@ -343,19 +319,8 @@ export const applicationService = {
       fallbackResumeUrl = '#';
     }
 
-    let fallbackPanUrl = '';
-    try {
-      if (typeof window !== 'undefined' && panDocument instanceof File) {
-        fallbackPanUrl = URL.createObjectURL(panDocument);
-      }
-    } catch {
-      fallbackPanUrl = '';
-    }
-
     const metadataPayload = JSON.stringify({
       panCard: cleanPan,
-      panCardUrl: fallbackPanUrl,
-      panCardFilename: panDocument?.name || '',
       dateOfBirth: dateOfBirth || '',
       servingNoticePeriod: servingNoticePeriod || '',
       lastWorkingDay: lastWorkingDay || '',
@@ -368,8 +333,6 @@ export const applicationService = {
       status: 'NEW',
       cover_letter: metadataPayload,
       panCard: cleanPan,
-      panCardUrl: fallbackPanUrl,
-      panCardFilename: panDocument?.name || '',
       resume_url: fallbackResumeUrl,
       resume_filename: resumeFile?.name || 'Resume.pdf',
       created_at: new Date().toISOString(),
@@ -378,8 +341,6 @@ export const applicationService = {
         email,
         phone,
         panCard: cleanPan,
-        panCardUrl: fallbackPanUrl,
-        panCardFilename: panDocument?.name || '',
         dateOfBirth: dateOfBirth || '',
         totalExperience,
         experience: totalExperience,
