@@ -14,7 +14,8 @@ import {
   FileText,
   AlertCircle,
   ArrowRight,
-  Download
+  Download,
+  CreditCard
 } from 'lucide-react';
 
 export default function MyApplicationsPage() {
@@ -147,38 +148,74 @@ export default function MyApplicationsPage() {
                     {app.job?.title || 'Job Position'}
                   </h3>
 
-                  <p className="text-xs text-slate-500 flex items-center gap-3">
+                  <p className="text-xs text-slate-500 flex flex-wrap items-center gap-3">
                     <span>{app.job?.location}</span>
                     <span>•</span>
                     <span>{app.job?.employmentType}</span>
                     <span>•</span>
                     <span>Applied on {new Date(app.createdAt).toLocaleDateString()}</span>
+                    {app.candidate?.panCard && (
+                      <>
+                        <span>•</span>
+                        <span className="inline-flex items-center gap-1 font-mono text-[11px] font-semibold text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
+                          <CreditCard className="w-3 h-3 text-[#ed7a1c]" />
+                          PAN: {app.candidate.panCard}
+                        </span>
+                      </>
+                    )}
                   </p>
 
-                  {(app.resume?.url || app.resumeUrl) && (
-                    <div className="pt-2 flex flex-wrap items-center gap-3">
-                      <a
-                        href={app.resume?.url || app.resumeUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-1 text-xs text-slate-600 hover:text-[#ed7a1c] font-medium transition"
-                      >
-                        <FileText className="w-3.5 h-3.5 text-slate-400" />
-                        <span>View Submitted Resume ({app.resume?.originalName || app.resumeFilename || 'Resume.pdf'})</span>
-                        <ExternalLink className="w-3 h-3 ml-0.5" />
-                      </a>
-                      <a
-                        href={app.resume?.url || app.resumeUrl}
-                        download={app.resume?.originalName || app.resumeFilename || 'Resume.pdf'}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-semibold text-[#ed7a1c] hover:text-[#d96a12] bg-orange-50 hover:bg-orange-100 border border-orange-200/50 transition"
-                      >
-                        <Download className="w-3 h-3" />
-                        <span>Download</span>
-                      </a>
-                    </div>
-                  )}
+                  <div className="pt-2 flex flex-wrap items-center gap-4">
+                    {(app.resume?.url || app.resumeUrl) && (
+                      <div className="flex items-center gap-2">
+                        <a
+                          href={app.resume?.url || app.resumeUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-1 text-xs text-slate-600 hover:text-[#ed7a1c] font-medium transition"
+                        >
+                          <FileText className="w-3.5 h-3.5 text-slate-400" />
+                          <span>Resume ({app.resume?.originalName || app.resumeFilename || 'Resume.pdf'})</span>
+                          <ExternalLink className="w-3 h-3 ml-0.5" />
+                        </a>
+                        <a
+                          href={app.resume?.url || app.resumeUrl}
+                          download={app.resume?.originalName || app.resumeFilename || 'Resume.pdf'}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-semibold text-[#ed7a1c] hover:text-[#d96a12] bg-orange-50 hover:bg-orange-100 border border-orange-200/50 transition"
+                        >
+                          <Download className="w-3 h-3" />
+                          <span>Download</span>
+                        </a>
+                      </div>
+                    )}
+
+                    {(app.candidate?.panCardUrl || app.panCardUrl) && (
+                      <div className="flex items-center gap-2">
+                        <a
+                          href={app.candidate?.panCardUrl || app.panCardUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-1 text-xs text-slate-600 hover:text-[#ed7a1c] font-medium transition"
+                        >
+                          <CreditCard className="w-3.5 h-3.5 text-slate-400" />
+                          <span>PAN Document</span>
+                          <ExternalLink className="w-3 h-3 ml-0.5" />
+                        </a>
+                        <a
+                          href={app.candidate?.panCardUrl || app.panCardUrl}
+                          download={app.candidate?.panCardFilename || app.panCardFilename || 'PAN_Card.pdf'}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-semibold text-[#ed7a1c] hover:text-[#d96a12] bg-orange-50 hover:bg-orange-100 border border-orange-200/50 transition"
+                        >
+                          <Download className="w-3 h-3" />
+                          <span>Download</span>
+                        </a>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 {/* Status Column */}

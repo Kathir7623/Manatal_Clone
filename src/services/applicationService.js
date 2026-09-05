@@ -47,12 +47,56 @@ export const normalizeApplication = (row) => {
     cand.linkedinProfile ||
     '';
 
+  let metadata = {};
+  if (row.cover_letter) {
+    try {
+      if (typeof row.cover_letter === 'string' && row.cover_letter.startsWith('{')) {
+        metadata = JSON.parse(row.cover_letter);
+      }
+    } catch {
+      metadata = {};
+    }
+  }
+
+  const panCard =
+    cand.pan_card ||
+    cand.panCard ||
+    row.pan_card ||
+    row.panCard ||
+    metadata.panCard ||
+    '';
+
+  const panCardUrl =
+    cand.pan_card_url ||
+    cand.panCardUrl ||
+    row.pan_card_url ||
+    row.panCardUrl ||
+    metadata.panCardUrl ||
+    '';
+
+  const panCardFilename =
+    cand.pan_card_filename ||
+    cand.panCardFilename ||
+    row.pan_card_filename ||
+    row.panCardFilename ||
+    metadata.panCardFilename ||
+    '';
+
+  const dob =
+    cand.date_of_birth ||
+    cand.dateOfBirth ||
+    metadata.dateOfBirth ||
+    '';
+
   return {
     _id: row.id,
     id: row.id,
     applicationId: row.application_id || row.applicationId,
     status: row.status || 'NEW',
-    coverLetter: row.cover_letter || row.coverLetter || '',
+    coverLetter: metadata.coverLetter || (typeof row.cover_letter === 'string' && !row.cover_letter.startsWith('{') ? row.cover_letter : ''),
+    panCard,
+    panCardUrl,
+    panCardFilename,
     resumeUrl: resumeUrl,
     resumeFilename: resumeFilename,
     resume: resumeUrl
@@ -69,7 +113,10 @@ export const normalizeApplication = (row) => {
       name: cand.name || 'Candidate',
       email: cand.email || '',
       phone: cand.phone || '',
-      dateOfBirth: cand.date_of_birth || cand.dateOfBirth || '',
+      panCard,
+      panCardUrl,
+      panCardFilename,
+      dateOfBirth: dob,
       experience: exp || 'N/A',
       totalExperience: exp || 'N/A',
       currentLocation: cand.current_location || cand.currentLocation || '',
@@ -79,8 +126,8 @@ export const normalizeApplication = (row) => {
       expectedCtc: expCtc,
       expectedSalary: expCtc ? { amount: expCtc } : null,
       noticePeriod: cand.notice_period || cand.noticePeriod || '',
-      servingNoticePeriod: cand.serving_notice_period || cand.servingNoticePeriod || '',
-      lastWorkingDay: cand.last_working_day || cand.lastWorkingDay || '',
+      servingNoticePeriod: cand.serving_notice_period || cand.servingNoticePeriod || metadata.servingNoticePeriod || '',
+      lastWorkingDay: cand.last_working_day || cand.lastWorkingDay || metadata.lastWorkingDay || '',
       portfolioUrl: cand.portfolio_url || cand.portfolioUrl || '',
       linkedinProfile: lkIn,
       linkedinUrl: lkIn,
@@ -117,11 +164,14 @@ export const applicationService = {
   // 1. Submit Candidate Application
   submitApplication: async (formData) => {
     // Read parameters whether passed as FormData or plain object
-    let jobId, name, email, phone, totalExperience, currentLocation, currentCompany, currentCtc, expectedCtc, noticePeriod, portfolioUrl, linkedinUrl, coverLetter, resumeFile;
+    let jobId, name, email, phone, dateOfBirth, panCard, panDocument, totalExperience, currentLocation, currentCompany, currentCtc, expectedCtc, noticePeriod, servingNoticePeriod, lastWorkingDay, portfolioUrl, linkedinUrl, coverLetter, resumeFile;
 
     if (typeof FormData !== 'undefined' && formData instanceof FormData) {
       jobId = formData.get('jobId');
       name = formData.get('name');
+      dateOfBirth = formData.get('dateOfBirth') || '';
+      panCard = formData.get('panCard') || '';
+      panDocument = formData.get('panDocument');
       email = formData.get('email');
       phone = formData.get('phone');
       totalExperience = formData.get('experience') || formData.get('totalExperience') || '';
@@ -137,21 +187,25 @@ export const applicationService = {
         : (formData.get('expectedCtc') || '');
       let np = formData.get('noticePeriod') || '';
       const serving = formData.get('servingNoticePeriod');
+      servingNoticePeriod = serving || '';
       if (serving) {
         np = `${np} (Serving: ${serving})`;
       }
       noticePeriod = np;
+      lastWorkingDay = formData.get('lastWorkingDay') || '';
       portfolioUrl = formData.get('portfolioUrl') || '';
       linkedinUrl = formData.get('linkedinProfile') || formData.get('linkedinUrl') || '';
       coverLetter = formData.get('coverLetter') || '';
       resumeFile = formData.get('resume');
     } else {
-      ({ jobId, name, email, phone, totalExperience, currentLocation, currentCompany, currentCtc, expectedCtc, noticePeriod, portfolioUrl, linkedinUrl, coverLetter, resume: resumeFile } = formData);
+      ({ jobId, name, dateOfBirth, panCard, panDocument, email, phone, totalExperience, currentLocation, currentCompany, currentCtc, expectedCtc, noticePeriod, servingNoticePeriod, lastWorkingDay, portfolioUrl, linkedinUrl, coverLetter, resume: resumeFile } = formData);
     }
 
     if (!jobId || !name || !email || !phone) {
       throw new Error('Please fill in all required application fields.');
     }
+
+    const cleanPan = panCard ? panCard.trim().toUpperCase() : '';
 
     if (isSupabaseConfigured) {
       // Step A: Find the target job
@@ -186,7 +240,39 @@ export const applicationService = {
         }
       }
 
-      // Step C: Upsert candidate in 'candidates' table
+      // Step C: Upload PAN card document if provided
+      let panUrl = '';
+      let panFilename = '';
+      if (panDocument && typeof panDocument !== 'string') {
+        const fileExt = panDocument.name.split('.').pop();
+        const safeName = `pan_${Date.now()}_${Math.random().toString(36).slice(2, 8)}.${fileExt}`;
+
+        const { data: uploadPanData, error: uploadPanErr } = await supabase.storage
+          .from('resumes')
+          .upload(safeName, panDocument, {
+            cacheControl: '3600',
+            upsert: false
+          });
+
+        if (!uploadPanErr && uploadPanData) {
+          const { data: urlPanData } = supabase.storage.from('resumes').getPublicUrl(uploadPanData.path);
+          panUrl = urlPanData.publicUrl;
+          panFilename = panDocument.name;
+        }
+      }
+
+      // Construct metadata JSON payload for fields not in default Postgres schema
+      const metadataPayload = JSON.stringify({
+        panCard: cleanPan,
+        panCardUrl: panUrl,
+        panCardFilename: panFilename,
+        dateOfBirth: dateOfBirth || '',
+        servingNoticePeriod: servingNoticePeriod || '',
+        lastWorkingDay: lastWorkingDay || '',
+        coverLetter: coverLetter || ''
+      });
+
+      // Step D: Upsert candidate in 'candidates' table
       const { data: candidate, error: candErr } = await supabase
         .from('candidates')
         .insert({
@@ -207,7 +293,7 @@ export const applicationService = {
 
       if (candErr) throw new Error(candErr.message);
 
-      // Step D: Insert into 'applications' table
+      // Step E: Insert into 'applications' table
       const { data: application, error: appErr } = await supabase
         .from('applications')
         .insert({
@@ -215,7 +301,7 @@ export const applicationService = {
           candidate_id: candidate.id,
           resume_url: resumeUrl,
           resume_filename: resumeFilename,
-          cover_letter: coverLetter || '',
+          cover_letter: metadataPayload,
           status: 'NEW'
         })
         .select('*, candidates(*), jobs(*)')
@@ -257,11 +343,33 @@ export const applicationService = {
       fallbackResumeUrl = '#';
     }
 
+    let fallbackPanUrl = '';
+    try {
+      if (typeof window !== 'undefined' && panDocument instanceof File) {
+        fallbackPanUrl = URL.createObjectURL(panDocument);
+      }
+    } catch {
+      fallbackPanUrl = '';
+    }
+
+    const metadataPayload = JSON.stringify({
+      panCard: cleanPan,
+      panCardUrl: fallbackPanUrl,
+      panCardFilename: panDocument?.name || '',
+      dateOfBirth: dateOfBirth || '',
+      servingNoticePeriod: servingNoticePeriod || '',
+      lastWorkingDay: lastWorkingDay || '',
+      coverLetter: coverLetter || ''
+    });
+
     const newApp = {
       id: crypto.randomUUID(),
       application_id: appId,
       status: 'NEW',
-      cover_letter: coverLetter || '',
+      cover_letter: metadataPayload,
+      panCard: cleanPan,
+      panCardUrl: fallbackPanUrl,
+      panCardFilename: panDocument?.name || '',
       resume_url: fallbackResumeUrl,
       resume_filename: resumeFile?.name || 'Resume.pdf',
       created_at: new Date().toISOString(),
@@ -269,6 +377,10 @@ export const applicationService = {
         name,
         email,
         phone,
+        panCard: cleanPan,
+        panCardUrl: fallbackPanUrl,
+        panCardFilename: panDocument?.name || '',
+        dateOfBirth: dateOfBirth || '',
         totalExperience,
         experience: totalExperience,
         currentLocation,
@@ -276,6 +388,8 @@ export const applicationService = {
         currentCtc,
         expectedCtc,
         noticePeriod,
+        servingNoticePeriod: servingNoticePeriod || '',
+        lastWorkingDay: lastWorkingDay || '',
         portfolioUrl,
         linkedinUrl,
         linkedinProfile: linkedinUrl

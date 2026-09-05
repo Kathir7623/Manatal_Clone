@@ -88,6 +88,8 @@ CREATE TABLE IF NOT EXISTS candidates (
   name TEXT NOT NULL,
   email TEXT NOT NULL,
   phone TEXT NOT NULL,
+  pan_card TEXT,
+  date_of_birth TEXT,
   total_experience TEXT,
   current_location TEXT,
   current_company TEXT,

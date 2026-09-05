@@ -22,7 +22,8 @@ import {
   Phone,
   Briefcase,
   Building,
-  Calendar
+  Calendar,
+  CreditCard
 } from 'lucide-react';
 
 const STATUS_OPTIONS = [
@@ -248,6 +249,14 @@ export default function ApplicationsView() {
                           <span className="font-mono text-[11px] text-slate-400">
                             {app.applicationId}
                           </span>
+                          {app.candidate?.panCard && (
+                            <>
+                              <span className="text-slate-300">•</span>
+                              <span className="font-mono text-[10px] px-1.5 py-0.5 bg-orange-50 text-[#ed7a1c] border border-orange-200/60 rounded font-semibold">
+                                PAN: {app.candidate.panCard}
+                              </span>
+                            </>
+                          )}
                         </div>
                       </td>
 
@@ -430,6 +439,18 @@ export default function ApplicationsView() {
                 </div>
               )}
 
+              {selectedApp.candidate?.panCard && (
+                <div className="flex items-center gap-2.5">
+                  <CreditCard className="w-4 h-4 text-[#ed7a1c] shrink-0" />
+                  <div>
+                    <span className="text-[11px] text-slate-400 block font-medium">PAN Card</span>
+                    <span className="font-mono font-bold text-slate-900 tracking-wider">
+                      {selectedApp.candidate?.panCard}
+                    </span>
+                  </div>
+                </div>
+              )}
+
               <div className="flex items-center gap-2.5">
                 <Briefcase className="w-4 h-4 text-slate-400 shrink-0" />
                 <div>
@@ -607,6 +628,62 @@ export default function ApplicationsView() {
                 <p className="text-xs text-slate-400">No resume attached.</p>
               )}
             </div>
+
+            {/* PAN Card Document Card (if uploaded) */}
+            {(selectedApp.candidate?.panCardUrl || selectedApp.panCardUrl) && (
+              <div>
+                <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                  PAN Card Document
+                </h4>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl border border-slate-200 bg-white shadow-xs gap-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-orange-50 text-[#ed7a1c] flex items-center justify-center shrink-0 border border-orange-200/50">
+                      <CreditCard className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <span className="text-sm font-bold text-slate-900 block truncate max-w-xs sm:max-w-md">
+                        {selectedApp.candidate?.panCardFilename || selectedApp.panCardFilename || 'PAN_Card.pdf'}
+                      </span>
+                      <span className="text-xs text-slate-400">
+                        Official ID Proof • {selectedApp.candidate?.panCard ? `PAN: ${selectedApp.candidate.panCard}` : 'PAN Document'}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <a
+                      href={selectedApp.candidate?.panCardUrl || selectedApp.panCardUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold text-[#ed7a1c] bg-orange-50 hover:bg-orange-100 border border-orange-200/60 transition shadow-2xs"
+                      title="Open PAN card in new tab"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" />
+                      <span>View</span>
+                    </a>
+                    <button
+                      type="button"
+                      disabled={downloadingUrl === (selectedApp.candidate?.panCardUrl || selectedApp.panCardUrl)}
+                      onClick={() =>
+                        handleDownloadResume(
+                          selectedApp.candidate?.panCardUrl || selectedApp.panCardUrl,
+                          selectedApp.candidate?.panCardFilename || selectedApp.panCardFilename || 'PAN_Card.pdf'
+                        )
+                      }
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold text-white bg-[#ed7a1c] hover:bg-[#d96a12] active:bg-[#b8540b] disabled:opacity-50 transition shadow-xs cursor-pointer"
+                      title="Download PAN card to your computer"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                      <span>
+                        {downloadingUrl === (selectedApp.candidate?.panCardUrl || selectedApp.panCardUrl)
+                          ? 'Downloading...'
+                          : 'Download'}
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
 
             <div className="pt-4 border-t border-slate-100 flex justify-end">
               <Button
