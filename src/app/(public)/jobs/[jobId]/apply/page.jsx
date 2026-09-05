@@ -69,7 +69,7 @@ export default function ApplyPage() {
       noticePeriod: '',
       servingNoticePeriod: 'No',
       lastWorkingDay: '',
-      termsAgreed: true
+      termsAgreed: false
     }
   });
 
@@ -599,8 +599,12 @@ export default function ApplyPage() {
             <label className="flex items-center gap-2 cursor-pointer text-xs text-slate-700">
               <input
                 type="checkbox"
-                className="rounded border-slate-300 text-[#ed7a1c] focus:ring-[#ed7a1c]"
-                {...register('termsAgreed')}
+                className={`rounded border text-[#ed7a1c] focus:ring-[#ed7a1c] ${
+                  errors.termsAgreed ? 'border-rose-400' : 'border-slate-300'
+                }`}
+                {...register('termsAgreed', {
+                  required: 'You must agree to the terms and conditions & privacy policy to continue.'
+                })}
               />
               <span>
                 I agree to the{' '}
@@ -608,6 +612,9 @@ export default function ApplyPage() {
                 <span className="text-[#ed7a1c] font-medium hover:underline">privacy policy</span>
               </span>
             </label>
+            {errors.termsAgreed && (
+              <p className="mt-1 text-xs text-rose-600 font-medium">{errors.termsAgreed.message}</p>
+            )}
           </div>
 
           {/* 16. Submit Button: [ Apply ] */}
